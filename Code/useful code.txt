@@ -1,0 +1,15 @@
+rows, cols, grid, enemy_pieces, own_pieces, goals = parse('C:/Users/Allan/Desktop/Notes/Y3S2/CS3243/Project/Project 1/Public Testcases/1.txt')
+
+initialized_state = State(rows, cols, grid, enemy_pieces, own_pieces, goals)
+
+initialized_state.get_board().print_grid()
+
+for k, v in initialized_state.get_threatened_squares().items():
+	print(f'{k[0], chr(97 + k[1])}: {[x.get_name() for x in v]}')
+
+for x in initialized_state.get_enemies():
+	print(f'{x.get_name()} is at {x.get_position()}.')
+	for y in x.get_actionables():
+		print(f'{x.get_name()} can move to {y}\n')
+
+result = search(rows, cols, grid, enemy_pieces, own_pieces, goals)
