@@ -1,4 +1,8 @@
+# A0201874H
+# Tay Wei Hong Allan
+
 import sys
+import random
 
 # Helper functions to aid in your implementation. Can edit/remove
 #############################################################################
@@ -47,10 +51,10 @@ class Board:
     #        print(chr(k) + "\t", end = "")
     #    print("\n")
     #    for i in range(self.get_height()):
-    #      print(str(i) + "\t", end = "") # Print row index
-    #       for j in range(self.get_width()):
+    #        print(str(i) + "\t", end = "") # Print row index
+    #        for j in range(self.get_width()):
     #           print(str(self.get_grid()[i][j]) + "\t", end = "")
-    #       print("\n")
+    #        print("\n")
             
     def update_grid(self, piece, new_coordinate):
         self.set_coordinate(new_coordinate[0], new_coordinate[1], self.piece_dict[piece.get_name()])
@@ -60,10 +64,9 @@ class Board:
 #############################################################################
 class Piece:
 
-    def __init__(self, name, coordinate, tag):
+    def __init__(self, name, coordinate):
         self.name = name
         self.coordinate = coordinate
-        self.tag = tag
         self.actionables = []
     
     def get_name(self):
@@ -71,9 +74,6 @@ class Piece:
     
     def get_position(self):
         return self.coordinate
-        
-    def get_tag(self):
-        return self.tag
         
     def get_actionables(self):
         return self.actionables
@@ -83,19 +83,19 @@ class Piece:
     
     def set_actionables(self, new_actionables):
         self.actionables = new_actionables
-        
-    @staticmethod    
-    def check_legality_king(board, coordinate, threatened): # Only for King
-        """
-        RETURNS TRUE IF MOVEMENT TO THE POSITION IS LEGAL -> NO OBSTACLES, NOT OCCUPIED BY OTHER PIECES, NOT THREATENED
-        """
-        flag = False
-        if board.get_coordinate_value(coordinate[0], coordinate[1]) != -1 and type(board.get_coordinate_value(coordinate[0], coordinate[1])) != str and (coordinate in threatened.keys()) == False:
-            flag = True            
-        return flag
+ 
+    #@staticmethod    
+    #def check_legality_threatened(board, coordinate, threatened):
+    #    """
+    #    RETURNS TRUE IF MOVEMENT TO THE POSITION IS LEGAL -> NO OBSTACLES, NOT OCCUPIED BY OTHER PIECES, NOT THREATENED
+    #    """
+    #    flag = False
+    #    if board.get_coordinate_value(coordinate[0], coordinate[1]) != -1 and type(board.get_coordinate_value(coordinate[0], coordinate[1])) != str and (coordinate in threatened.keys()) == False:
+    #        flag = True            
+    #    return flag
     
     @staticmethod
-    def check_legality_others(board, coordinate):
+    def check_legality(board, coordinate):
         """
         RETURNS TRUE IF MOVEMENT TO THE POSITION IS LEGAL -> NO OBSTACLES, NOT OCCUPIED BY OTHER PIECES
         """
@@ -105,7 +105,7 @@ class Piece:
         return flag
 
     @staticmethod
-    def King(board, new_coordinate, threatened={}):
+    def King(board, new_coordinate):
         """
         RETURNS ALL NEW POSSIBLE ACTIONS THAT CAN BE TAKEN BY THE KING IN ITS NEW POSITION AFTER MOVEMENT
         """
@@ -121,7 +121,7 @@ class Piece:
                 else:
                     new_actionables += [ (new_x , new_y) ]
         for action in new_actionables.copy():
-            if Piece.check_legality_king(board, action, threatened): # If available, do not remove
+            if Piece.check_legality(board, action): # If available, do not remove
                 continue
             else:
                 new_actionables.remove(action) # Else remove
@@ -141,28 +141,28 @@ class Piece:
         
         while North_x >= 0: # Row decreasing
             # Check obstacles and other pieces
-            if Piece.check_legality_others(board, (North_x, new_coordinate[1])):
+            if Piece.check_legality(board, (North_x, new_coordinate[1])):
                 new_actionables += [ (North_x, new_coordinate[1]) ]
                 North_x -= 1
             else:
                 break
         while East_y < board.get_width(): # Col increasing
             # Check obstacles and other pieces
-            if Piece.check_legality_others(board, (new_coordinate[0], East_y)):
+            if Piece.check_legality(board, (new_coordinate[0], East_y)):
                 new_actionables += [ (new_coordinate[0], East_y) ]
                 East_y += 1
             else:
                 break
         while South_x < board.get_height(): # Row increasing
             # Check obstacles and other pieces
-            if Piece.check_legality_others(board, (South_x, new_coordinate[1])):
+            if Piece.check_legality(board, (South_x, new_coordinate[1])):
                 new_actionables += [ (South_x, new_coordinate[1]) ]
                 South_x += 1
             else:
                 break
         while West_y >= 0: # Col decreasing
             # Check obstacles and other pieces
-            if Piece.check_legality_others(board, (new_coordinate[0], West_y)):
+            if Piece.check_legality(board, (new_coordinate[0], West_y)):
                 new_actionables += [ (new_coordinate[0], West_y) ]
                 West_y -= 1
             else:
@@ -183,7 +183,7 @@ class Piece:
         
         while NE_x >= 0 and NE_y < board.get_width(): # Row decreasing, Col increasing
             # Check obstacles and other pieces
-            if Piece.check_legality_others(board, (NE_x, NE_y)):
+            if Piece.check_legality(board, (NE_x, NE_y)):
                 new_actionables += [ (NE_x, NE_y) ]
                 NE_x -= 1
                 NE_y += 1
@@ -192,7 +192,7 @@ class Piece:
         
         while SE_x < board.get_height() and SE_y < board.get_width(): # Row increasing, Col increasing
             # Check obstacles and other pieces
-            if Piece.check_legality_others(board, (SE_x, SE_y)):
+            if Piece.check_legality(board, (SE_x, SE_y)):
                 new_actionables += [ (SE_x, SE_y) ]
                 SE_x += 1
                 SE_y += 1
@@ -201,7 +201,7 @@ class Piece:
         
         while SW_x < board.get_height() and SW_y >= 0: # Row increasing, Col decreasing
             # Check obstacles and other pieces
-            if Piece.check_legality_others(board, (SW_x, SW_y)):
+            if Piece.check_legality(board, (SW_x, SW_y)):
                 new_actionables += [ (SW_x, SW_y) ]
                 SW_x += 1
                 SW_y -= 1
@@ -210,7 +210,7 @@ class Piece:
                 
         while NW_x >= 0 and NW_y >= 0: # Row decreasing, Col decreasing
             # Check obstacles and other pieces
-            if Piece.check_legality_others(board, (NW_x, NW_y)):
+            if Piece.check_legality(board, (NW_x, NW_y)):
                 new_actionables += [ (NW_x, NW_y) ]
                 NW_x -= 1
                 NW_y -= 1
@@ -229,44 +229,44 @@ class Piece:
         if (new_coordinate[0] - 2) >= 0:
             # Left
             if (new_coordinate[1] - 1) >= 0:
-                if Piece.check_legality_others(board, (new_coordinate[0] - 2, new_coordinate[1] - 1)):
+                if Piece.check_legality(board, (new_coordinate[0] - 2, new_coordinate[1] - 1)):
                     new_actionables += [ (new_coordinate[0] - 2, new_coordinate[1] - 1) ]
             # Right
             if (new_coordinate[1] + 1) < board.get_width():
-                if Piece.check_legality_others(board, (new_coordinate[0] - 2, new_coordinate[1] + 1)):
+                if Piece.check_legality(board, (new_coordinate[0] - 2, new_coordinate[1] + 1)):
                     new_actionables += [ (new_coordinate[0] - 2, new_coordinate[1] + 1) ]
                     
         # West First
         if (new_coordinate[1] + 2) < board.get_width():
             # Up
             if (new_coordinate[0] - 1) >= 0:
-                if Piece.check_legality_others(board, (new_coordinate[0] - 1, new_coordinate[1] + 2)):
+                if Piece.check_legality(board, (new_coordinate[0] - 1, new_coordinate[1] + 2)):
                     new_actionables += [ (new_coordinate[0] - 1, new_coordinate[1] + 2) ]
             # Down
             if (new_coordinate[0] + 1) < board.get_height():
-                if Piece.check_legality_others(board, (new_coordinate[0] + 1, new_coordinate[1] + 2)):
+                if Piece.check_legality(board, (new_coordinate[0] + 1, new_coordinate[1] + 2)):
                     new_actionables += [ (new_coordinate[0] + 1, new_coordinate[1] + 2) ]
         
         # South First
-        if (new_coordinate[0] + 2) <= board.get_height():
+        if (new_coordinate[0] + 2) < board.get_height():
             # Left
             if (new_coordinate[1] - 1) >= 0:
-                if Piece.check_legality_others(board, (new_coordinate[0] + 2, new_coordinate[1] - 1)):
+                if Piece.check_legality(board, (new_coordinate[0] + 2, new_coordinate[1] - 1)):
                     new_actionables += [ (new_coordinate[0] + 2, new_coordinate[1] - 1) ]
             # Right
             if (new_coordinate[1] + 1) < board.get_width():
-                if Piece.check_legality_others(board, (new_coordinate[0] + 2, new_coordinate[1] + 1)):
+                if Piece.check_legality(board, (new_coordinate[0] + 2, new_coordinate[1] + 1)):
                     new_actionables += [ (new_coordinate[0] + 2, new_coordinate[1] + 1) ]
         
         # East First
         if (new_coordinate[1] - 2) >= 0:
             # Up 
             if (new_coordinate[0] - 1) >= 0:
-                if Piece.check_legality_others(board, (new_coordinate[0] - 1, new_coordinate[1] - 2)):
+                if Piece.check_legality(board, (new_coordinate[0] - 1, new_coordinate[1] - 2)):
                     new_actionables += [ (new_coordinate[0] - 1, new_coordinate[1] - 2) ]
             # Down
             if (new_coordinate[0] + 1) < board.get_height():
-                if Piece.check_legality_others(board, (new_coordinate[0] + 1, new_coordinate[1] - 2)):
+                if Piece.check_legality(board, (new_coordinate[0] + 1, new_coordinate[1] - 2)):
                     new_actionables += [ (new_coordinate[0] + 1, new_coordinate[1] - 2) ]
         
         return new_actionables
@@ -286,7 +286,7 @@ class Piece:
                 else:
                     new_actionables += [ (new_x , new_y) ]
         for action in new_actionables:
-            if Piece.check_legality_others(board, (action[0], action[1])):
+            if Piece.check_legality(board, (action[0], action[1])):
                 continue
             else:
                 new_actionables.remove(action)
@@ -316,14 +316,12 @@ class Piece:
         new_actionables = Piece.Rook(board, new_coordinate) + Piece.Knight(board, new_coordinate)
         return new_actionables
     
-    def move(self, board, new_coordinate, threatened={}):
+    def move(self, board, new_coordinate):
         """
         MOVE THE PIECE TO THE NEW POSITION AND UPDATE ITS ACTIONABLES AND COORDINATES
         """
         if self.get_name() == "King":
-            if self.get_tag() == 'enemy':
-                threatened = {}
-            self.set_actionables(Piece.King(board, new_coordinate, threatened))
+            self.set_actionables(Piece.King(board, new_coordinate))
         elif self.get_name() == "Queen":
             self.set_actionables(Piece.Queen(board, new_coordinate))
         elif self.get_name() == "Rook":
@@ -340,102 +338,109 @@ class Piece:
             self.set_actionables(Piece.Empress(board, new_coordinate))
         else:
             pass
-            #print(f'{self.get_name()} is not a valid Chess Piece')
+        #print(f'{self.get_name()} is not a valid Chess Piece')
         # Update Current grid 
         # board.update_grid(self, new_coordinate)
         # Update Piece new position 
-        self.update_position(new_coordinate)
+        # self.update_position(new_coordinate)
 
 #############################################################################
 ######## Node
 #############################################################################
 class Node:
 
-    def __init__(self, state, parent, path, path_cost, depth):
-        self.state = state # Coordinate of current position
-        self.parent = parent # Previous Node
-        self.path = path # Actions Taken
-        self.path_cost = path_cost # Total cost of actions taken
-        self.depth = depth # Number of nodes transversed 
-    
-    def __lt__(self, other):
-        return self.path_cost < other.path_cost
-    
+    def __init__(self, state, value, threatened):
+        self.state = state # Pieces left
+        self.length = len(state) # Number of Pieces left
+        self.value = value # Current number of coordinates threatened by more than 1 square
+        self.threatened = threatened
+
     def get_state(self):
         return self.state
     
-    def get_parent(self):
-        return self.parent
-        
-    def get_path(self):
-        return self.path
-        
-    def get_path_cost(self):
-        return self.path_cost
-        
-    def get_depth(self):
-        return self.depth
+    def get_value(self):
+        return self.value
+    
+    def get_length(self):
+        return self.length
+    
+    def get_threatened(self):
+        return self.threatened
 
 #############################################################################
 ######## State
 #############################################################################
 class State:
 
-    def __init__(self, rows, cols, grid, enemy_pieces, own_pieces, goals):
+    def __init__(self, rows, cols, grid, pieces, limit):
         self.board = Board(rows, cols, grid)
-        self.enemies = [Piece(x[0], x[1], 'enemy') for x in enemy_pieces]
-        self.allies = [Piece(y[0], y[1], 'ally') for y in own_pieces]
-        self.goals = goals
-        # Filled in the initialilzation below with the threatened coords as key, List of enemy Piece object as value
-        self.threatened_squares = {}
-        self.piece_in_play = None
+        self.pieces = [Piece(v, k) for k, v in pieces.items()]
+        self.limit = int(limit)
+        self.threatened = {}
+        self.initial_value = 0
         
-        # Pre-process the initialize grid => Updating the grid with all the pieces position
-        for piece in (self.enemies + self.allies):
+        # Fill in the board
+        for piece in (self.pieces):
             piece_row = piece.get_position()[0]
             piece_col = piece.get_position()[1]
             self.board.update_grid( piece, (piece_row, piece_col) )
+        # Need to account for obstacles separately
+        mock_board = []
+        for r in self.board.get_grid():
+            curr_row = []
+            for c in r:
+                if type(c) == str:
+                    curr_row += [0]
+                else:
+                    curr_row += [c]
+            mock_board += [curr_row]
+        self.mock_board = Board(rows, cols, mock_board)
+        # Update the self.threatened with their moves
+        for piece in self.pieces:
+            piece.move(self.mock_board, piece.get_position())
+            for action in piece.get_actionables():
+                if action not in self.threatened.keys():
+                    self.threatened[action] = []
+                self.threatened[action] += [piece]
+                self.initial_value += 1
         
-        # Adding the actionables to the pieces starting with enemies follow by allies
-        for piece in (self.enemies + self.allies):
-            # since enemies are added in first, threatened_squares will be filled before ally king is filled
-            piece.move(self.board, piece.get_position(), self.threatened_squares) 
-            if piece.get_tag() == 'enemy': # Add enemy pieces actionables to threatened squares
-                for threatened_coords in piece.get_actionables():
-                    if threatened_coords not in self.threatened_squares.keys():
-                        self.threatened_squares[threatened_coords] = []
-                    self.threatened_squares[threatened_coords] += [piece]            
-
     def get_board(self):
         return self.board
 
-    def get_enemies(self):
-        return self.enemies
+    def get_mock_board(self):
+        return self.mock_board
 
-    def get_allies(self):
-        return self.allies
+    def get_pieces(self):
+        return self.pieces
 
-    def get_goals(self):
-        return self.goals
+    def get_threatened(self):
+        return self.threatened
 
-    def get_threatened_squares(self):
-        return self.threatened_squares
+    def get_limit(self):
+        return self.limit
+
+    def get_value(self):
+        return self.initial_value
     
-    def get_piece_in_play(self):
-        return self.piece_in_play
-    
-    def assignment_one(self):
-        for piece in self.allies:
-            if piece.get_name() == "King":
-                self.piece_in_play = piece
-                break
+    @staticmethod
+    def remove_piece(threatened, piece):
+        if piece.get_position() in threatened.keys():
+            for other in threatened[piece.get_position()]:
+                other.get_actionables().remove(piece.get_position())
+            del(threatened[piece.get_position()]) # Remove the piece coord because nothing is being threatened anymore
+        for action in piece.get_actionables():
+            threatened[action].remove(piece)
+            if threatened[action] == []:
+                del(threatened[action])
+        return threatened
 
-    def isGoalState(self, new_coordinate):
-        for goal in self.goals:
-            if new_coordinate == goal:
-                return True
-        return False
-    
+    @staticmethod 
+    def value(threatened, piece, curr_value): # Number of cells with more than 1 piece threatening
+        counter = curr_value - len(piece.get_actionables())
+        if piece.get_position() in threatened.keys():
+            counter -= len(threatened[piece.get_position()])
+        return counter
+
     def generateActions(self, new_coordinate):
         """
         GENERATE ALL LEGAL ACTIONS OF A PIECE AT A PARTICULAR COORDINATE GIVEN THE CURRENT GRID STATE
@@ -447,10 +452,7 @@ class State:
         else:
             curr_piece_name = self.get_piece_in_play().get_name()
         if curr_piece_name == "King":
-            if self.get_piece_in_play().get_tag() == 'enemy':
-                actionables = Piece.King(self.get_board(), new_coordinate)
-            else:
-                actionables = Piece.King(self.get_board(), new_coordinate, self.get_threatened_squares())
+            actionables = Piece.King(self.get_board(), new_coordinate)
         elif curr_piece_name == "Queen":
             actionables = Piece.Queen(self.get_board(), new_coordinate)
         elif curr_piece_name == "Rook":
@@ -474,8 +476,49 @@ class State:
 ######## Implement Search Algorithm
 #############################################################################
 def search(rows, cols, grid, pieces, k):
-    pass
+    for i in range(300):
+        random.seed(i*i)
+        initialized_state = State(rows, cols, grid, pieces, k)
 
+        # Random Restart
+        random_first_piece = initialized_state.get_pieces()[random.randint(0, len(initialized_state.get_pieces())-1)]
+        random_first_value = State.value(initialized_state.get_threatened(), random_first_piece, initialized_state.get_value())
+        random_first_threatened = State.remove_piece(initialized_state.get_threatened(), random_first_piece)
+        initialized_state.get_pieces().remove(random_first_piece)
+        random_remaining_pieces = initialized_state.get_pieces()
+        curr_node = Node(random_remaining_pieces, random_first_value, random_first_threatened)
+        #curr_node = Node(initialized_state.get_pieces(), initialized_state.get_value(), initialized_state.get_threatened())
+
+        while (curr_node.get_length() > initialized_state.get_limit()):
+            curr_node_move_list = []
+            curr_best_value = curr_node.get_value()
+            for piece in curr_node.get_state():
+                value = State.value(curr_node.get_threatened(), piece, curr_node.get_value())
+                if value == 0: # Goal Obtained
+                    curr_node.get_state().remove(piece)
+                    final_pieces = curr_node.get_state()
+                    result = {}
+                    for final_piece in final_pieces:
+                        position = final_piece.get_position()
+                        result[(chr(97 + position[1]), position[0])] = final_piece.get_name()
+                    return result
+                elif value <= curr_best_value: # Consider Plateaus
+                    if value < curr_best_value: # If strictly less, remove all other options
+                        curr_node_move_list = []
+                        curr_best_value = value # Change value
+                    curr_node_move_list += [(piece, value)] # Else add on to the possible moves to be considered
+                else:
+                    continue
+            if curr_node_move_list == []: # No possible moves, stuck -> Restart
+                break
+            else:
+                move_made = curr_node_move_list[random.randint(0, len(curr_node_move_list)-1)] # Choose a random move from list
+                new_value = move_made[1]
+                new_threatened = State.remove_piece(curr_node.get_threatened(), move_made[0])
+                curr_node.get_state().remove(move_made[0])
+                remaining_pieces = curr_node.get_state()
+                curr_node = Node(remaining_pieces, new_value, new_threatened)
+    return {}
 
 #############################################################################
 ######## Parser function and helper functions
