@@ -13,3 +13,34 @@ for x in initialized_state.get_enemies():
 		print(f'{x.get_name()} can move to {y}\n')
 
 result = search(rows, cols, grid, enemy_pieces, own_pieces, goals)
+
+for piece in state.get_pieces():
+	print(f'{piece.get_name()}: {piece.get_actionables()}\n')
+
+for k, v in state.get_threatened().items():
+	print(f'{k}: {v}\n')
+rows, cols, grid, pieces, k = parse("C:\\Users\\Allan\\Desktop\\Notes\\Y3S2\\CS3243\\Project\\cs3243-chess-assignment\\Code\\Public Testcases\\Local3.txt")
+state = State(rows, cols, grid, pieces, k)
+
+search(rows, cols, grid, pieces, k)
+
+print(value)
+print(f'{piece.get_position()}: {piece.get_name()}')
+print(curr_node.get_threatened())
+
+print(curr_node.get_length())
+print(curr_node.get_value())
+for coordinates, p in curr_node.get_threatened().items():
+        print(f'{coordinates}:{p}')
+
+
+rows, cols, grid, num_pieces = parse("C:\\Users\\Allan\\Desktop\\Notes\\Y3S2\\CS3243\\Project\\cs3243-chess-assignment\\Code\\Public Testcases\\CSP1.txt")
+result = search(rows, cols, grid, num_pieces)
+state = State(rows, cols, grid, num_pieces)
+for k, v in result.items():
+	state.board.update_grid(Piece(v), (k[1], ord(k[0])-97))
+state.board.print_grid()
+
+print(f'coord = {coord}')
+print(f'Before {curr_node.get_available()[each_piece]}')
+print(f'After {curr_node.get_available()[each_piece]}')
