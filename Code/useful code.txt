@@ -44,3 +44,5 @@ state.board.print_grid()
 print(f'coord = {coord}')
 print(f'Before {curr_node.get_available()[each_piece]}')
 print(f'After {curr_node.get_available()[each_piece]}')
+
+os.chdir("C:\\Users\\Allan\\Desktop\\Notes\\Y3S2\\CS3243\\Project\\cs3243-chess-assignment\\Code\\Adverserial Search")
