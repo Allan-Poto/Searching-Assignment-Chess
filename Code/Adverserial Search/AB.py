@@ -15,49 +15,238 @@ import sys
 # VALUES DEFINED ARE FOR BLACK PIECES, FOR WHITE PIECES FLIPPED ALL THE VALUES BEFORE USING
 piecesPositionValueTable = {
     "King": {
-        "EarlyGame":[],
-        "MiddleGame":[],
-        "LateGame": []
+        "Opening":[ [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+                ],
+        "Middle":[  [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+                ],
+        "End": [    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+            ]
     },
     "Queen": {
-        "EarlyGame":[],
-        "MiddleGame":[],
-        "LateGame": []
+        "Opening":[ [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+                ],
+        "Middle":[  [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+                ],
+        "End": [    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+                ]
     },
     "Bishop": {
-        "EarlyGame":[],
-        "MiddleGame":[],
-        "LateGame": []
+        "Opening":[ [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+                ],
+        "Middle":[  [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+                ],
+        "End": [    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+                ]
     },
     "Knight": {
-        "EarlyGame":[],
-        "MiddleGame":[],
-        "LateGame": []
+        "Opening":[ [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+                ],
+        "Middle":[  [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+                ],
+        "End": [    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+                ]
     },
     "Rook": {
-        "EarlyGame":[],
-        "MiddleGame":[],
-        "LateGame": []
+        "Opening":[ [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+                ],
+        "Middle":[  [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+                ],
+        "End": [    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+                ]
     },
     "Pawn": {
-        "EarlyGame":[],
-        "MiddleGame":[],
-        "LateGame": []
+        "Opening":[ [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+                ],
+        "Middle":[  [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+                ],
+        "End": [    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+                ]
     },
     "Ferz": {
-        "EarlyGame":[],
-        "MiddleGame":[],
-        "LateGame": []
+        "Opening":[ [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+                ],
+        "Middle":[  [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+                ],
+        "End": [    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+                ]
     },
     "Empress": {
-        "EarlyGame":[],
-        "MiddleGame":[],
-        "LateGame": []
+        "Opening":[ [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+                ],
+        "Middle":[  [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+                ],
+        "End": [    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+                ]
     },
     "Princess": {
-        "EarlyGame":[],
-        "MiddleGame":[],
-        "LateGame": []
+        "Opening":[ [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+                ],
+        "Middle":[  [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+                ],
+        "End": [    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0]
+                ]
     }
 }
 
@@ -93,7 +282,7 @@ InitialChessBoard = {
 }
 
 class Piece:
-	
+    
     def __init__(self, name, coordinate, tag):
         self.name = name
         self.coordinate = coordinate
@@ -109,7 +298,6 @@ class Piece:
             self.material_value = 330
         elif name == "Knight":
             self.material_value = 300
-            if tag == 
         elif name == "Rook":
             self.material_value = 570
         elif name == "Empress": # Rook Knight
@@ -128,14 +316,14 @@ class Piece:
     def get_position(self):
         return self.coordinate
 
+    def get_tag(self):
+        return self.tag
+
     def get_material_value(self):
         return self.material_value    
 
     def update_position(self, new_coordinates):
         self.coordinate = new_coordinates
-    
-    def set_actionables(self, new_actionables):
-        self.actionables = new_actionables
 
     def actual_material_value(self, game_phase):
         valueTable = piecesPositionValueTable[self.get_name()][game_phase]
@@ -147,8 +335,10 @@ class Piece:
     @staticmethod
     def King(board, new_coordinate, tag):
         """
-        RETURNS ALL NEW POSSIBLE ACTIONS THAT CAN BE TAKEN BY THE KING IN ITS NEW POSITION AFTER MOVEMENT
+        RETURNS MOVEMENT (FROM_DEST, TO_DEST), COVERAGE [LIST OF DEST (INCLUDE ALLY)] THAT CAN BE TAKEN BY THE KING IN ITS POSITION
         """
+        COVERAGE = set()
+        MOVEMENT = set()
         new_actionables = []
         for i in range(-1, 2):
             for j in range(-1, 2):
@@ -160,23 +350,23 @@ class Piece:
                     continue
                 else:
                     new_actionables += [ (new_x , new_y) ]
-        for action in new_actionables.copy():
+        for action in new_actionables:
             value = board.get_coordinate_value(action[0], action[1]) 
             if value == 0:# If available, do not remove
-                continue
+                MOVEMENT.add((new_coordinate, action))
             elif value.get_tag() != tag:
-                continue
-            else:
-                new_actionables.remove(action) # Else remove
-        return new_actionables            
+                MOVEMENT.add((new_coordinate, action))
+            COVERAGE.add(action)
+        return MOVEMENT, COVERAGE 
         
     @staticmethod
     def Rook(board, new_coordinate, tag):
         """
-        RETURNS ALL NEW POSSIBLE ACTIONS THAT CAN BE TAKEN BY THE ROOK IN ITS NEW POSITION AFTER MOVEMENT
+        RETURNS MOVEMENT (FROM_DEST, TO_DEST), COVERAGE [LIST OF DEST (INCLUDE ALLY)] THAT CAN BE TAKEN BY THE ROOK IN ITS POSITION
         """
-        new_actionables = []
-        
+        MOVEMENT = set()
+        COVERAGE = set()
+
         North_x = new_coordinate[0] - 1
         East_y = new_coordinate[1] + 1
         South_x = new_coordinate[0] + 1
@@ -185,55 +375,69 @@ class Piece:
         while North_x >= 0: # Row decreasing
             value = board.get_coordinate_value(North_x, new_coordinate[1]) 
             if value == 0:
-                new_actionables += [ (North_x, new_coordinate[1]) ]
+                MOVEMENT.add( ( new_coordinate, (North_x, new_coordinate[1]) ) )
+                COVERAGE.add( (North_x, new_coordinate[1]) )
                 North_x -= 1
                 continue
             elif value.get_tag() != tag:
-                new_actionables += [ (North_x, new_coordinate[1]) ]
+                MOVEMENT.add( ( new_coordinate, (North_x, new_coordinate[1]) ) )
+                COVERAGE.add( (North_x, new_coordinate[1]) )
                 break
             else:
+                COVERAGE.add( (North_x, new_coordinate[1]) )
                 break
         while East_y < board.get_width(): # Col increasing
             value = board.get_coordinate_value(new_coordinate[0], East_y) 
             if value == 0:
-                new_actionables += [ (new_coordinate[0], East_y) ]
+                MOVEMENT.add( ( new_coordinate, (new_coordinate[0], East_y) ) )
+                COVERAGE.add( (new_coordinate[0], East_y) )
                 East_y += 1
                 continue
             elif value.get_tag() != tag:
-                new_actionables += [ (new_coordinate[0], East_y) ]
+                MOVEMENT.add( ( new_coordinate, (new_coordinate[0], East_y) ) )
+                COVERAGE.add( (new_coordinate[0], East_y) )
                 break
             else:
+                COVERAGE.add( (new_coordinate[0], East_y) )
                 break
         while South_x < board.get_height(): # Row increasing
             value = board.get_coordinate_value(new_coordinate[0], East_y) 
             if value == 0:
-                new_actionables += [ (South_x, new_coordinate[1]) ]
+                MOVEMENT.add( ( new_coordinate, (South_x, new_coordinate[1]) ) )
+                COVERAGE.add( (South_x, new_coordinate[1]) )
                 South_x += 1
                 continue
             elif value.get_tag() != tag:
-                new_actionables += [ (South_x, new_coordinate[1]) ]
+                MOVEMENT.add( ( new_coordinate, (South_x, new_coordinate[1]) ) )
+                COVERAGE.add( (South_x, new_coordinate[1]) )
                 break
             else:
+                COVERAGE.add( (South_x, new_coordinate[1]) )
                 break
+
         while West_y >= 0: # Col decreasing
             value = board.get_coordinate_value(new_coordinate[0], East_y) 
             if value == 0:
-                new_actionables += [ (new_coordinate[0], West_y) ]
+                MOVEMENT.add( ( new_coordinate, (new_coordinate[0], West_y) ) )
+                COVERAGE.add( (new_coordinate[0], West_y) )
                 West_y -= 1
                 continue
             elif value.get_tag() != tag:
-                new_actionables += [ (new_coordinate[0], West_y) ]
+                MOVEMENT.add( ( new_coordinate, (new_coordinate[0], West_y) ) )
+                COVERAGE.add( (new_coordinate[0], West_y) )
                 break
             else:
+                COVERAGE.add( (new_coordinate[0], West_y) )
                 break
-        return new_actionables       
+        return MOVEMENT, COVERAGE  
 
     @staticmethod    
     def Bishop(board, new_coordinate, tag):
         """
-        RETURNS ALL NEW POSSIBLE ACTIONS THAT CAN BE TAKEN BY THE BISHOP IN ITS NEW POSITION AFTER MOVEMENT
+        RETURNS MOVEMENT (FROM_DEST, TO_DEST), COVERAGE [LIST OF DEST (INCLUDE ALLY)] THAT CAN BE TAKEN BY THE BISHOP IN ITS POSITION
         """
-        new_actionables = []
+        MOVEMENT = set()
+        COVERAGE = set()
         
         NE_x, NE_y = ( new_coordinate[0] - 1, new_coordinate[1] + 1 )
         SE_x, SE_y = ( new_coordinate[0] + 1, new_coordinate[1] + 1 )
@@ -243,63 +447,76 @@ class Piece:
         while NE_x >= 0 and NE_y < board.get_width(): # Row decreasing, Col increasing
             value = board.get_coordinate_value(NE_x, NE_y) 
             if value == 0:
-                new_actionables += [ (NE_x, NE_y) ]
+                MOVEMENT.add( ( new_coordinate, (NE_x, NE_y) ) )
+                COVERAGE.add( (NE_x, NE_y) )
                 NE_x -= 1
                 NE_y += 1
                 continue
             elif value.get_tag() != tag:
-                new_actionables += [ (NE_x, NE_y) ]
+                MOVEMENT.add( ( new_coordinate, (NE_x, NE_y) ) )
+                COVERAGE.add( (NE_x, NE_y) )
                 break
             else:
+                COVERAGE.add( new_coordinate, (NE_x, NE_y) )
                 break
         
         while SE_x < board.get_height() and SE_y < board.get_width(): # Row increasing, Col increasing
             value = board.get_coordinate_value(SE_x, SE_y) 
             if value == 0:
-                new_actionables += [ (SE_x, SE_y) ]
+                MOVEMENT.add( ( new_coordinate, (SE_x, SE_y) ) )
+                COVERAGE.add( (SE_x, SE_y) )
                 SE_x += 1
                 SE_y += 1
                 continue
             elif value.get_tag() != tag:
-                new_actionables += [ (SE_x, SE_y) ]
+                MOVEMENT.add( ( new_coordinate, (SE_x, SE_y) ) )
+                COVERAGE.add( (SE_x, SE_y) )
                 break
             else:
+                COVERAGE.add( (SE_x, SE_y) )
                 break
         
         while SW_x < board.get_height() and SW_y >= 0: # Row increasing, Col decreasing
             value = board.get_coordinate_value(SW_x, SW_y) 
             if value == 0:
-                new_actionables += [ (SW_x, SW_y) ]
+                MOVEMENT.add( ( new_coordinate, (SW_x, SW_y) ) )
+                COVERAGE.add( (SW_x, SW_y) )
                 SW_x += 1
                 SW_y -= 1
                 continue
             elif value.get_tag() != tag:
-                new_actionables += [ (SW_x, SW_y) ]
+                MOVEMENT.add( ( new_coordinate, (SW_x, SW_y) ) )
+                COVERAGE.add( (SW_x, SW_y) )
                 break
             else:
+                COVERAGE.add( (SW_x, SW_y) )
                 break
                 
         while NW_x >= 0 and NW_y >= 0: # Row decreasing, Col decreasing
             value = board.get_coordinate_value(NW_x, NW_y) 
             if value == 0:
-                new_actionables += [ (NW_x, NW_y) ]
+                MOVEMENT.add( ( new_coordinate, (NW_x, NW_y) ) )
+                COVERAGE.add( (NW_x, NW_y) )
                 NW_x -= 1
                 NW_y -= 1
                 continue
             elif value.get_tag() != tag:
-                new_actionables += [ (NW_x, NW_y) ]
+                MOVEMENT.add( ( new_coordinate, (NW_x, NW_y) ) )
+                COVERAGE.add( (NW_x, NW_y) )
                 break
             else:
+                COVERAGE.add( (NW_x, NW_y) )
                 break
 
-        return new_actionables
+        return MOVEMENT, COVERAGE
     
     @staticmethod    
     def Knight(board, new_coordinate, tag):
         """
-        RETURNS ALL NEW POSSIBLE ACTIONS THAT CAN BE TAKEN BY THE KNIGHT IN ITS NEW POSITION AFTER MOVEMENT
+       RETURNS MOVEMENT (FROM_DEST, TO_DEST), COVERAGE [LIST OF DEST (INCLUDE ALLY)] THAT CAN BE TAKEN BY THE KNIGHT IN ITS POSITION
         """
-        new_actionables = []
+        MOVEMENT = set()
+        COVERAGE = set()
         
         # North First
         if (new_coordinate[0] - 2) >= 0:
@@ -307,12 +524,18 @@ class Piece:
             if (new_coordinate[1] - 1) >= 0:
                 value = board.get_coordinate_value(new_coordinate[0] - 2, new_coordinate[1] - 1)
                 if value == 0 or value.get_tag() != tag:
-                    new_actionables += [ (new_coordinate[0] - 2, new_coordinate[1] - 1) ]
+                    MOVEMENT.add( ( new_coordinate, (new_coordinate[0] - 2, new_coordinate[1] - 1) ) )
+                    COVERAGE.add( (new_coordinate[0] - 2, new_coordinate[1] - 1) )
+                else:
+                    COVERAGE.add( (new_coordinate[0] - 2, new_coordinate[1] - 1) )
             # Right
             if (new_coordinate[1] + 1) < board.get_width():
                 value = board.get_coordinate_value(new_coordinate[0] - 2, new_coordinate[1] + 1)
                 if value == 0 or value.get_tag() != tag:
-                    new_actionables += [ (new_coordinate[0] - 2, new_coordinate[1] + 1) ]
+                    MOVEMENT.add( ( new_coordinate, (new_coordinate[0] - 2, new_coordinate[1] + 1) ) )
+                    COVERAGE.add( (new_coordinate[0] - 2, new_coordinate[1] + 1) )
+                else:
+                    COVERAGE.add( (new_coordinate[0] - 2, new_coordinate[1] + 1) )
                     
         # West First
         if (new_coordinate[1] + 2) < board.get_width():
@@ -320,12 +543,18 @@ class Piece:
             if (new_coordinate[0] - 1) >= 0:
                 value = board.get_coordinate_value(new_coordinate[0] - 1, new_coordinate[1] + 2)
                 if value == 0 or value.get_tag() != tag:
-                    new_actionables += [ (new_coordinate[0] - 1, new_coordinate[1] + 2) ]
+                    MOVEMENT.add( ( new_coordinate, (new_coordinate[0] - 1, new_coordinate[1] + 2) ) )
+                    COVERAGE.add( (new_coordinate[0] - 1, new_coordinate[1] + 2) )
+                else:
+                    COVERAGE.add( (new_coordinate[0] - 1, new_coordinate[1] + 2) )
             # Down
             if (new_coordinate[0] + 1) < board.get_height():
                 value = board.get_coordinate_value(new_coordinate[0] + 1, new_coordinate[1] + 2)
                 if value == 0 or value.get_tag() != tag:
-                    new_actionables += [ (new_coordinate[0] + 1, new_coordinate[1] + 2) ]
+                    MOVEMENT.add( ( new_coordinate, (new_coordinate[0] + 1, new_coordinate[1] + 2) ) )
+                    COVERAGE.add( (new_coordinate[0] + 1, new_coordinate[1] + 2) )
+                else:
+                    COVERAGE.add( (new_coordinate[0] + 1, new_coordinate[1] + 2) )
         
         # South First
         if (new_coordinate[0] + 2) < board.get_height():
@@ -333,12 +562,18 @@ class Piece:
             if (new_coordinate[1] - 1) >= 0:
                 value = board.get_coordinate_value(new_coordinate[0] + 2, new_coordinate[1] - 1)
                 if value == 0 or value.get_tag() != tag:
-                    new_actionables += [ (new_coordinate[0] + 2, new_coordinate[1] - 1) ]
+                    MOVEMENT.add( ( new_coordinate, (new_coordinate[0] + 2, new_coordinate[1] - 1) ) )
+                    COVERAGE.add( (new_coordinate[0] + 2, new_coordinate[1] - 1) )
+                else:
+                    COVERAGE.add( (new_coordinate[0] + 2, new_coordinate[1] - 1) )
             # Right
             if (new_coordinate[1] + 1) < board.get_width():
                 value = board.get_coordinate_value(new_coordinate[0] + 2, new_coordinate[1] + 1)
                 if value == 0 or value.get_tag() != tag:
-                    new_actionables += [ (new_coordinate[0] + 2, new_coordinate[1] + 1) ]
+                    MOVEMENT.add( ( new_coordinate, (new_coordinate[0] + 2, new_coordinate[1] + 1) ) )
+                    COVERAGE.add( (new_coordinate[0] + 2, new_coordinate[1] + 1) )
+                else:
+                    COVERAGE.add( (new_coordinate[0] + 2, new_coordinate[1] + 1) )
         
         # East First
         if (new_coordinate[1] - 2) >= 0:
@@ -346,21 +581,30 @@ class Piece:
             if (new_coordinate[0] - 1) >= 0:
                 value = board.get_coordinate_value(new_coordinate[0] - 1, new_coordinate[1] - 2)
                 if value == 0 or value.get_tag() != tag:
-                    new_actionables += [ (new_coordinate[0] - 1, new_coordinate[1] - 2) ]
+                    MOVEMENT.add( ( new_coordinate, (new_coordinate[0] - 1, new_coordinate[1] - 2) ) )
+                    COVERAGE.add( (new_coordinate[0] - 1, new_coordinate[1] - 2) )
+                else:
+                    COVERAGE.add( (new_coordinate[0] - 1, new_coordinate[1] - 2) )
             # Down
             if (new_coordinate[0] + 1) < board.get_height():
                 value = board.get_coordinate_value(new_coordinate[0] + 1, new_coordinate[1] - 2)
                 if value == 0 or value.get_tag() != tag:
-                    new_actionables += [ (new_coordinate[0] + 1, new_coordinate[1] - 2) ]
+                    MOVEMENT.add( ( new_coordinate, (new_coordinate[0] + 1, new_coordinate[1] - 2) ) )
+                    COVERAGE.add( (new_coordinate[0] + 1, new_coordinate[1] - 2) )
+                else:
+                    COVERAGE.add( (new_coordinate[0] + 1, new_coordinate[1] - 2) )
         
-        return new_actionables
+        return MOVEMENT, COVERAGE
 
     @staticmethod
     def Ferz(board, new_coordinate, tag):
         """
-        RETURNS ALL NEW POSSIBLE ACTIONS THAT CAN BE TAKEN BY THE FERZ IN ITS NEW POSITION AFTER MOVEMENT
+        RETURNS MOVEMENT (FROM_DEST, TO_DEST), COVERAGE [LIST OF DEST (INCLUDE ALLY)] THAT CAN BE TAKEN BY THE FERZ IN ITS POSITION
         """
         new_actionables = []
+        COVERAGE = set()
+        MOVEMENT = set()
+
         for i in range(-1, 2, 2):
             for j in range(-1, 2, 2):
                 new_x = new_coordinate[0] + i
@@ -372,101 +616,178 @@ class Piece:
         for action in new_actionables:
             value = board.get_coordinate_value(action[0], action[1])
             if value == 0 or value.get_tag() != tag:
-                continue
+                MOVEMENT.add((new_coordinate, action))
+                COVERAGE.add(action)
             else:
-                new_actionables.remove(action)
-        return new_actionables
+                COVERAGE.add(action)
+        return MOVEMENT, COVERAGE
 
     @staticmethod
     def Queen(board, new_coordinate, tag):
         """
-        RETURNS ALL NEW POSSIBLE ACTIONS THAT CAN BE TAKEN BY THE QUEEN IN ITS NEW POSITION AFTER MOVEMENT
+        RETURNS MOVEMENT (FROM_DEST, TO_DEST), COVERAGE [LIST OF DEST (INCLUDE ALLY)] THAT CAN BE TAKEN BY THE QUEEN IN ITS POSITION
         """
-        new_actionables = Piece.Rook(board, new_coordinate, tag) + Piece.Bishop(board, new_coordinate, tag)
-        return new_actionables
+        MR, CR = Piece.Rook(board, new_coordinate, tag)
+        MB, CB = Piece.Bishop(board, new_coordinate, tag)
+        return MR.union(MB), CR.union(CB)
 
     @staticmethod 
     def Princess(board, new_coordinate, tag):
         """
-        RETURNS ALL NEW POSSIBLE ACTIONS THAT CAN BE TAKEN BY THE PRINCESS IN ITS NEW POSITION AFTER MOVEMENT
+        RETURNS MOVEMENT (FROM_DEST, TO_DEST), COVERAGE [LIST OF DEST (INCLUDE ALLY)] THAT CAN BE TAKEN BY THE PRINCESS IN ITS POSITION
         """
-        new_actionables = Piece.Bishop(board, new_coordinate, tag) + Piece.Knight(board, new_coordinate, tag)
-        return new_actionables       
+        MB, CB = Piece.Bishop(board, new_coordinate, tag)
+        MK, CK = Piece.Knight(board, new_coordinate, tag)
+        return MB.union(MK), CB.union(CK)     
         
     @staticmethod
     def Empress(board, new_coordinate, tag):
         """
-        RETURNS ALL NEW POSSIBLE ACTIONS THAT CAN BE TAKEN BY THE EMPRESS IN ITS NEW POSITION AFTER MOVEMENT
+        RETURNS MOVEMENT (FROM_DEST, TO_DEST), COVERAGE [LIST OF DEST (INCLUDE ALLY)] THAT CAN BE TAKEN BY THE EMPRESS IN ITS POSITION
         """
-        new_actionables = Piece.Rook(board, new_coordinate, tag) + Piece.Knight(board, new_coordinate, tag)
-        return new_actionables
+        MR, CR = Piece.Rook(board, new_coordinate, tag)
+        MK, CK = Piece.Knight(board, new_coordinate, tag)
+        return MR.union(MK), CR.union(CK)
 
     @staticmethod
     def Pawn(board, new_coordinate, tag):
         """
-        RETURNS ALL NEW POSSIBLE ACTIONS THAT CAN BE TAKEN BY THE PAWN IN ITS NEW POSITION AFTER MOVEMENT
+        RETURNS MOVEMENT (FROM_DEST, TO_DEST), COVERAGE [LIST OF DEST (INCLUDE ALLY)] THAT CAN BE TAKEN BY THE PAWN IN ITS POSITION
         """
-        new_actionables = []
+        MOVEMENT = set()
+        COVERAGE = set()
         if tag == "White":
             if board.get_coordinate_value(new_coordinate[0], new_coordinate[1]-1) == 0: # No piece infront of the pawn
-                new_actionables += [ (new_coordinate[0], new_coordinate[1]-1) ]
+                MOVEMENT.add( (new_coordinate, (new_coordinate[0], new_coordinate[1]-1) ) )
             for i in range(-1, 2, 2): 
-                if board.get_coordinate_value(new_coordinate[0]+i,new_coordinate[1]-1).get_tag() != tag: # Can capture a piece on either diagonals
-                    new_actionables += [ (new_coordinate[0]+i,new_coordinate[1]-1) ]
+                if board.get_coordinate_value(new_coordinate[0]+i, new_coordinate[1]-1).get_tag() != tag: # Can capture a piece on either diagonals
+                    MOVEMENT.add( (new_coordinate, (new_coordinate[0]+i, new_coordinate[1]-1) ) )
+                COVERAGE.add( (new_coordinate[0]+i, new_coordinate[1]-1) )
         else:
-            if board.get_coordinate_value(new_coordinate[0], new_coordinate[1]+1) != 0:
-                new_actionables += [ (new_coordinate[0], new_coordinate[1]+1) ]
-            for i in range(-1, 2, 2):
-                if board.get_coordinate_value(new_coordinate[0]+i,new_coordinate[1]+1).get_tag() != tag:
-                    new_actionables += [ (new_coordinate[0]+i,new_coordinate[1]+1) ]
-        return new_actionables
+            if board.get_coordinate_value(new_coordinate[0], new_coordinate[1]+1) == 0: # No piece infront of the pawn
+                MOVEMENT.add( (new_coordinate, (new_coordinate[0], new_coordinate[1]+1) ) )
+            for i in range(-1, 2, 2): 
+                if board.get_coordinate_value(new_coordinate[0]+i, new_coordinate[1]+1).get_tag() != tag: # Can capture a piece on either diagonals
+                    MOVEMENT.add( (new_coordinate, (new_coordinate[0]+i, new_coordinate[1]+1) ) )
+                COVERAGE.add( (new_coordinate[0]+i, new_coordinate[1]+1) )
+
+        return MOVEMENT, COVERAGE
+
+    def move(self, board, new_coordinate):
+        """
+        RETURNS MOVEMENT (FROM_DEST, TO_DEST), COVERAGE [LIST OF DEST (INCLUDE ALLY)] OF A PIECE AT A PARTICULAR COORDINATE GIVEN 
+        THE CURRENT GRID STATE
+        """
+        curr_piece_name = self.get_name()
+        if curr_piece_name == "King":
+            MOVEMENT, COVERAGE = Piece.King(board, new_coordinate, self.get_tag())
+        elif curr_piece_name == "Queen":
+            MOVEMENT, COVERAGE = Piece.Queen(board, new_coordinate, self.get_tag())
+        elif curr_piece_name == "Rook":
+            MOVEMENT, COVERAGE = Piece.Rook(board, new_coordinate, self.get_tag())
+        elif curr_piece_name == "Bishop":
+            MOVEMENT, COVERAGE = Piece.Bishop(board, new_coordinate, self.get_tag())
+        elif curr_piece_name == "Knight":
+            MOVEMENT, COVERAGE = Piece.Knight(board, new_coordinate, self.get_tag())
+        elif curr_piece_name == "Ferz":
+            MOVEMENT, COVERAGE = Piece.Ferz(board, new_coordinate, self.get_tag())
+        elif curr_piece_name == "Princess":
+            MOVEMENT, COVERAGE = Piece.Princess(board, new_coordinate, self.get_tag())
+        elif curr_piece_name == "Empress":
+            MOVEMENT, COVERAGE = Piece.Empress(board, new_coordinate, self.get_tag())
+        elif curr_piece_name == "Pawn":
+            MOVEMENT, COVERAGE = Piece.Pawn(board, new_coordinate, self.get_tag())
+        else:
+            # print(f'{self.get_piece_in_play().get_name()} is not a valid Chess Piece')
+            pass
+        return MOVEMENT, COVERAGE
 
 #############################################################################
 ######## Board
 #############################################################################
 class Board:
-	
-    def __init__(self, rows, cols, grid):
-        pass
+    
+    def __init__(self, pieces):
+        self.grid = [[0]*7]*7 # Creating the grid
+        self.white_pieces = {}
+        self.black_pieces = {}
+
+        for pos, piece in pieces.items():
+            tag = piece[1]
+            pos = (ord(pos[0])-97, pos[1])
+            if tag == "white":
+                new_piece = Piece(piece[0], pos, "white")
+                self.white_pieces[new_piece] = pos
+                self.grid[pos[0]][pos[1]] = new_piece
+            else:
+                new_piece = Piece(piece[0], pos, "black")
+                self.black_pieces[new_piece] = pos
+                self.grid[pos[0]][pos[1]] = new_piece
+            
+    def get_grid(self):
+        return self.grid
+
+    def get_white_pieces(self):
+        return self.white_pieces
+
+    def get_black_pieces(self):
+        return self.black_pieces
+        
 
 #############################################################################
 ######## State
 #############################################################################
 class State:
-	
-    def __init__(self, rows, cols, grid, num_pieces):
-        pass
+     # Start State Material Value Total Excluding King = 4340
+    
+    def __init__(self, board):
+        self.board = board
+        self.white_coverage = {} # Dict containing Coord: {White Pieces threatening that coordinate}
+        self.black_coverage = {} # Dict containing Coord: {Black Pieces threatening that coordinate}
+        self.white_movements = set() # Contain Legal movements (FROM, TO_DEST) that can be made by the white pieces
+        self.black_movements = set() # Contain Legal movements (FROM, TO_DEST) that can be made by the black pieces
+        self.black_plain_mv = sum([x.get_material_value() for x in self.board.get_black_pieces()]) - 888888 # Exclude King
+        self.white_plain_mv = sum([x.get_material_value() for x in self.board.get_white_pieces()]) - 888888 # Exclude King
+        self.game_phase = ""
 
-    def generateActions(self, curr_piece_name, new_coordinate, curr_piece_tag):
-        """
-        GENERATE ALL LEGAL ACTIONS OF A PIECE AT A PARTICULAR COORDINATE GIVEN THE CURRENT GRID STATE
-        FUNCTION DOES NOT UPDATE THE PIECE COORDINATE AND ACTIONABLES 
-        """
-        if curr_piece_name == "King":
-            actionables = Piece.King(self.get_board(), new_coordinate, curr_piece_tag)
-        elif curr_piece_name == "Queen":
-            actionables = Piece.Queen(self.get_board(), new_coordinate, curr_piece_tag)
-        elif curr_piece_name == "Rook":
-            actionables = Piece.Rook(self.get_board(), new_coordinate, curr_piece_tag)
-        elif curr_piece_name == "Bishop":
-            actionables = Piece.Bishop(self.get_board(), new_coordinate, curr_piece_tag)
-        elif curr_piece_name == "Knight":
-            actionables = Piece.Knight(self.get_board(), new_coordinate, curr_piece_tag)
-        elif curr_piece_name == "Ferz":
-            actionables = Piece.Ferz(self.get_board(), new_coordinate, curr_piece_tag)
-        elif curr_piece_name == "Princess":
-            actionables = Piece.Princess(self.get_board(), new_coordinate, curr_piece_tag)
-        elif curr_piece_name == "Empress":
-            actionables = Piece.Empress(self.get_board(), new_coordinate, curr_piece_tag)
-        elif curr_piece_name == "Pawn":
-            actionables = Piece.Pawn(self.get_board(), new_coordinate, curr_piece_tag)
+        for piece, pos in self.board.get_white_pieces().items():
+            self.white_movements, actions = piece.move(self.board, pos)
+            for action in actions:
+                if action not in self.white_coverage.keys():
+                    self.white_coverage[action] = set()
+                self.white_coverage[action].add(piece)
+
+        for piece, pos in self.board.get_black_pieces().items():
+            self.black_movements, actions = piece.move(self.board, pos)
+            for action in actions:
+                if action not in self.black_coverage.keys():
+                    self.black_coverage[action] = set()
+                self.black_coverage[action].add(piece)
+
+        pieces_remaining = len(self.board.get_white_pieces()) + len(self.board.get_black_pieces())
+        if pieces_remaining < 10 or self.black_plain_mv < 1300 or self.white_plain_mv < 1300: # Including Kings
+            self.game_phase = "Late"
+        elif pieces_remaining < 22 or self.black_plain_mv < 3800 or self.white_plain_mv < 3800: # Including Kings
+            self.game_phase = "Middle"
         else:
-            # print(f'{self.get_piece_in_play().get_name()} is not a valid Chess Piece')
-            pass
-        return actionables
-        
+            self.game_phase = "Opening"
+    
+    def get_total_material_value(self, tag):
+        if tag == "White":
+            total_material_value = sum([x.actual_material_value(self.game_phase) for x in self.board.get_white_pieces()])
+        else:
+            total_material_value = sum([x.actual_material_value(self.game_phase) for x in self.board.get_black_pieces()])
+        return total_material_value
+            
 #Implement your minimax with alpha-beta pruning algorithm here.
 def ab(gameboard):
+    pass
+    # return start_position, end_position
+
+def max_black():
+    pass
+
+def mini_white():
     pass
 
 #############################################################################
