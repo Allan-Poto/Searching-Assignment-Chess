@@ -1,4 +1,4 @@
-from ctypes.wintypes import tagMSG
+from math import inf
 import sys
 
 ### IMPORTANT: Remove any print() functions or rename any print functions/variables/string when submitting on CodePost
@@ -12,273 +12,308 @@ import sys
 # Bonus material value given to pieces when they occupy a certain square at a point in the game
 # Each phase of game includes bonus material value as well for the type of pieces 
 # -> I.E: Bishop has some bonus points in the early game, Rook has more bonus points in the late game.
-# VALUES DEFINED ARE FOR BLACK PIECES, FOR WHITE PIECES FLIPPED ALL THE VALUES BEFORE USING
+# VALUES DEFINED ARE FOR WHITE PIECES, FOR BLACK PIECES FLIPPED ALL THE VALUES BEFORE USING
+
+# PIECE_TABLE_STRATEGY
 piecesPositionValueTable = {
     "King": {
-        "Opening":[ [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0]
+        "Opening":[ [20, 30, 20, 10, 20, 30, 20],  # Rook side weaker early game due to new pieces
+                    [-20, -20, -10, -10, -10, -20, -20],
+                    [-30, -30, -30, -30, -30, -30, -30],
+                    [-40, -40, -40, -40, -40, -40, -40],
+                    [-50, -50, -50, -50, -50, -50, -50],
+                    [-50, -50, -50, -50, -50, -50, -50],
+                    [-50, -50, -50, -50, -50, -50, -50]
                 ],
-        "Middle":[  [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0]
+        "Middle":[ [20, 30, 20, 10, 20, 30, 20],  # Rook side weaker early game due to new pieces
+                    [-20, -20, -10, -10, -10, -20, -20],
+                    [-30, -30, -30, -30, -30, -30, -30],
+                    [-40, -40, -40, -40, -40, -40, -40],
+                    [-50, -50, -50, -50, -50, -50, -50],
+                    [-50, -50, -50, -50, -50, -50, -50],
+                    [-50, -50, -50, -50, -50, -50, -50]
                 ],
-        "End": [    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0]
+        "End": [    [-20, -10, 0, 0, 0, -10, -20],
+                    [-20, -10, 0, 10, 0, -10, -20],
+                    [-20, -20, -20, 20, -20, -20, -20],
+                    [-20, -20, -20, -20, -20, -20, -20],
+                    [-20, -20, -20, -20, -20, -20, -20],
+                    [-30, -20, -20, -30, -20, -20, -30],
+                    [-40, -30, -30, -30, -30, -30, -40]
             ]
     },
     "Queen": {
-        "Opening":[ [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0]
+        "Opening":[ [-40, -30, -20, -20, -20, -30, -40], 
+                    [-30, 10, 10, 10, 10, 10, -30],
+                    [-20, 20, 30, 30, 30, 20, -20],
+                    [-10, 0, 10, 10, 10, 0, -10],
+                    [-20, -10, -10, -10, -10, -10, -20],
+                    [-30, -20, -20, -20, -20, -20, -30],
+                    [-40, -20, -20, -20, -20, -20, -40]
                 ],
-        "Middle":[  [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0]
+        "Middle":[  [-40, -30, -20, -20, -20, -30, -40],
+                    [-30, 10, 10, 10, 10, 10, -30],
+                    [-20, 20, 20, 40, 20, 20, -20],
+                    [-10, 10, 10, 20, 10, 10, -10],
+                    [-10, -10, -10, -10, -10, -10, -10],
+                    [-30, -10, -10, -10, -10, -10, -30],
+                    [-40, -30, -20, -20, -20, -30, -40]
                 ],
-        "End": [    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0]
+        "End": [    [-40, -30, -20, -20, -20, -30, -40],
+                    [-30, 10, 10, 10, 10, 10, -30],
+                    [-20, 10, 30, 30, 30, 10, -20],
+                    [-10, 10, 30, 60, 30, 10, -10],
+                    [-10, 10, 30, 30, 30, 10, -10],
+                    [-30, 10, 10, 10, 10, 10, -30],
+                    [-40, -30, -20, -20, -20, -30, -40]
                 ]
     },
     "Bishop": {
-        "Opening":[ [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0]
+        "Opening":[ [-30, -20, -20, -20, -20, -20, -30],
+                    [-20, 10, 0, 0, 0, 10, -20],
+                    [-20, 20, 20, 20, 20, 20, -20],
+                    [-20, 10, 10, 10, 10, 10, -20],
+                    [-20, -10, 0, 0, 0, -10, -20],
+                    [-20, -10, -10, -10, -10, -10, -20],
+                    [-30, -20, -20, -20, -20, -20, -30]
                 ],
-        "Middle":[  [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0]
+        "Middle":[  [-30, -20, -20, -20, -20, -20, -30],
+                    [-20, 0, -10, -10, -10, 0, -20],
+                    [-20, 10, 10, 10, 10, 10, -20],
+                    [-20, -10, 0, 0, 0, -10, -20],
+                    [-20, -10, 0, 0, 0, -10, -20],
+                    [-20, -10, 0, 0, 0, -10, -20],
+                    [-30, -20, -20, -20, -20, -20, -30]
                 ],
-        "End": [    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0]
+        "End": [    [-30, -20, -20, -20, -20, -20, -30],
+                    [-20, 0, -10, -10, -10, 0, -20],
+                    [-20, 10, 10, 10, 10, 10, -20],
+                    [-20, 0, 20, 20, 20, 0, -20],
+                    [-20, 0, 20, 20, 20, 0, -20],
+                    [-20, 0, 20, 20, 20, 0, -20],
+                    [-30, -20, -20, -20, -20, -20, -30]
                 ]
     },
     "Knight": {
-        "Opening":[ [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0]
+        "Opening":[ [-50, -40, -30, -20, -30, -40, -50],
+                    [-40, -20, 0, 0, 0, -20, -40],
+                    [-30, 20, 20, 20, 20, 20, -30],
+                    [-30, 10, 20, 20, 20, 10, -30],
+                    [-30, 0, 0, 0, 0, 0, -30],
+                    [-40, -20, 0, 0, 0, -20, -40],
+                    [-50, -40, -30, -20, -30, -40, -50]
                 ],
-        "Middle":[  [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0]
+        "Middle":[  [-50, -40, -30, -20, -30, -40, -50],
+                    [-40, -20, 0, 0, 0, -20, -40],
+                    [-30, 10, 10, 20, 10, 10, -30],
+                    [-30, 0, 20, 30, 20, 0, -30],
+                    [-30, 10, 10, 20, 10, 10, -30],
+                    [-40, -20, 0, 0, 0, -20, -40],
+                    [-50, -40, -30, -20, -30, -40, -50]
                 ],
-        "End": [    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0]
+        "End": [    [-50, -40, -30, -20, -30, -40, -50],
+                    [-40, -20, 0, 0, 0, -20, -40],
+                    [-30, 10, 10, 20, 10, 10, -30],
+                    [-30, 0, 20, 40, 20, 0, -30],
+                    [-30, 10, 10, 20, 10, 10, -30],
+                    [-40, -20, 0, 0, 0, -20, -40],
+                    [-50, -40, -30, -20, -30, -40, -50]
                 ]
     },
     "Rook": {
-        "Opening":[ [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
+        "Opening":[ [0, 0, 0, 10, 0, 0, 0],
+                    [-10, 0, 0, 0, 0, 0, -10],
+                    [-10, 0, 0, 0, 0, 0, -10],
+                    [-10, 0, 0, 0, 0, 0, -10],
+                    [-10, 0, 0, 0, 0, 0, -10],
+                    [0, 10, 10, 10, 10, 10, 0],
                     [0, 0, 0, 0, 0, 0, 0]
                 ],
-        "Middle":[  [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
+        "Middle":[  [0, 0, 0, 10, 0, 0, 0],
+                    [-10, 0, 0, 0, 0, 0, -10],
+                    [-10, 0, 0, 0, 0, 0, -10],
+                    [-10, 0, 0, 0, 0, 0, -10],
+                    [-10, 0, 0, 0, 0, 0, -10],
+                    [10, 20, 20, 20, 20, 20, 10],
                     [0, 0, 0, 0, 0, 0, 0]
                 ],
-        "End": [    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0]
+        "End": [    [0, 0, 0, 10, 0, 0, 0],
+                    [-10, 0, 0, 0, 0, 0, -10],
+                    [-10, 0, 0, 0, 0, 0, -10],
+                    [-10, 0, 0, 0, 0, 0, -10],
+                    [-10, 0, 0, 0, 0, 0, -10],
+                    [10, 30, 30, 30, 30, 30, 10],
+                    [0, 0, 0, 0, 0, 0, 0]   
                 ]
     },
     "Pawn": {
         "Opening":[ [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0]
+                    [0, 20, 20, 20, 20, 20, 0], # Allow queen/bishop movements, king protecting pawns to stay put
+                    [-20, 10, 10, 10, 10, 10, -20],
+                    [-10, -30, -30, -30, -30, -30, -10],
+                    [-10, 0, 0, 0, 0, 0, -10],
+                    [-10, 0, 0, 0, 0, 0, -10],
+                    [-50, -50, -50, -50, -50, -50, -50]
                 ],
         "Middle":[  [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0]
+                    [0, 20, 20, 20, 20, 20, 0],
+                    [-10, 10, 10, -20, 10, 10, -20],
+                    [-10, 10, 10, 10, 10, 10, -10],
+                    [-10, -30, -30, -30, -30, -30, -10],
+                    [-10, 0, 0, 0, 0, 0, -10],
+                    [-50, -50, -50, -50, -50, -50, -50]
                 ],
         "End": [    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0]
+                    [0, 10, 10, 10, 10, 10, 0],
+                    [-10, 30, 30, 30, 30, 30, -20],
+                    [-10, 10, 10, 10, 10, 10, -10],
+                    [-10, 0, 0, 0, 0, 0, -10],
+                    [-10, -10, -10, -10, -10, -10, -10],
+                    [-50, -50, -50, -50, -50, -50, -50]
                 ]
     },
     "Ferz": {
-        "Opening":[ [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0]
+        "Opening":[ [-30, -10, -10, -10, -10, -10, -30],
+                    [-10, 10, 10, 10, 10, 10, -10],
+                    [-10, 20, 20, 20, 20, 20, -10],
+                    [-10, 0, 0, 0, 0, 0, -10],
+                    [-10, -20, -20, -20, -20, -20, -10],
+                    [-10, 0, 0, 0, 0, 0, -10],
+                    [-30, 0, 0, 0, 0, 0, -30]
                 ],
-        "Middle":[  [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0]
+        "Middle":[  [-30, -10, -10, -10, -10, -10, -30],
+                    [-10, 10, 10, 10, 10, 10, -10],
+                    [-10, 20, 20, 20, 20, 20, -10],
+                    [-10, 0, 0, 0, 0, 0, -10],
+                    [-10, -20, -20, -20, -20, -20, -10],
+                    [-10, 0, 0, 0, 0, 0, -10],
+                    [-30, 0, 0, 0, 0, 0, -30]
                 ],
-        "End": [    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0]
+        "End": [    [-30, -10, -10, -10, -10, -10, -30],
+                    [-10, 0, 0, 0, 0, 0, -10],
+                    [-10, 0, 10, 10, 10, 0, -10],
+                    [-10, 0, 10, 20, 10, 0, -10],
+                    [-10, 0, 10, 10, 10, 0, -10],
+                    [-10, 0, 0, 0, 0, 0, -10],
+                    [-30, 0, 0, 0, 0, 0, -30]
                 ]
     },
     "Empress": {
-        "Opening":[ [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0]
+        "Opening":[[-50, -40, -30, -10, -30, -40, -50], 
+                    [-50, -20, 0, 0, 0, -20, -50], 
+                    [-40, 10, 10, 10, 10, 10, -40], 
+                    [-40, 0, 10, 10, 10, 0, -40], 
+                    [-40, -10, -10, -10, -10, -10, -40], 
+                    [-30, 0, 0, 0, 0, 0, -30], 
+                    [-50, -40, -30, -20, -30, -40, -50]
                 ],
-        "Middle":[  [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0]
-                ],
-        "End": [    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0]
-                ]
+
+        "Middle":[[-50, -40, -30, -10, -30, -40, -50], 
+                [-50, -20, 0, 0, 0, -20, -50], 
+                [-40, 10, 10, 20, 10, 10, -40], 
+                [-40, 0, 20, 30, 20, 0, -40], 
+                [-40, 10, 10, 20, 10, 10, -40], 
+                [-30, 10, 30, 30, 30, 10, -30], 
+                [-50, -40, -30, -20, -30, -40, -50]
+            ],
+
+        "End": [[-50, -40, -30, -10, -30, -40, -50], 
+                [-50, -20, 0, 0, 0, -20, -50], 
+                [-40, 10, 10, 20, 10, 10, -40], 
+                [-40, 0, 20, 40, 20, 0, -40], 
+                [-40, 10, 10, 20, 10, 10, -40], 
+                [-30, 10, 30, 30, 30, 10, -30], 
+                [-50, -40, -30, -20, -30, -40, -50]
+            ]
     },
     "Princess": {
-        "Opening":[ [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0]
-                ],
-        "Middle":[  [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0]
-                ],
-        "End": [    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0],
-                    [0, 0, 0, 0, 0, 0, 0]
-                ]
+        "Opening":[[-80, -60, -50, -40, -50, -60, -80], 
+                    [-60, -10, 0, 0, 0, -10, -60], 
+                    [-50, 40, 40, 40, 40, 40, -50], 
+                    [-50, 20, 30, 30, 30, 20, -50], 
+                    [-50, -10, 0, 0, 0, -10, -50], 
+                    [-60, -30, -10, -10, -10, -30, -60], 
+                    [-80, -60, -50, -40, -50, -60, -80]
+            ],
+        "Middle":[[-80, -60, -50, -40, -50, -60, -80], 
+                    [-60, -20, -10, -10, -10, -20, -60], 
+                    [-50, 30, 30, 40, 30, 30, -50], 
+                    [-50, 0, 30, 40, 30, 0, -50], 
+                    [-50, 10, 20, 30, 20, 10, -50], 
+                    [-60, -20, 10, 10, 10, -20, -60], 
+                    [-80, -60, -50, -40, -50, -60, -80]
+            ],
+        "End": [[-80, -60, -50, -40, -50, -60, -80], 
+                [-60, -20, -10, -10, -10, -20, -60], 
+                [-50, 30, 30, 40, 30, 30, -50], 
+                [-50, 0, 50, 70, 50, 0, -50], 
+                [-50, 10, 40, 50, 40, 10, -50], 
+                [-60, -20, 30, 30, 30, -20, -60], 
+                [-80, -60, -50, -40, -50, -60, -80]
+            ]
+
     }
 }
 
-InitialChessBoard = {
-    (6, 3): ('King', 'Black'), 
-    (6, 2): ('Queen', 'Black'), 
-    (6, 1): ('Bishop', 'Black'), 
-    (6, 0): ('Knight', 'Black'), 
-    (6, 6): ('Rook', 'Black'), 
-    (6, 4): ('Princess', 'Black'), 
-    (6, 5): ('Empress', 'Black'), 
-    (5, 1): ('Pawn', 'Black'), 
-    (5, 2): ('Pawn', 'Black'), 
-    (5, 3): ('Pawn', 'Black'), 
-    (5, 4): ('Pawn', 'Black'), 
-    (5, 5): ('Pawn', 'Black'), 
-    (5, 0): ('Ferz', 'Black'), 
-    (5, 6): ('Ferz', 'Black'), 
-    (0, 3):('King', 'White'), 
-    (0, 2): ('Queen', 'White'), 
-    (0, 1): ('Bishop', 'White'), 
-    (0, 0): ('Knight', 'White'), 
-    (0, 6): ('Rook', 'White'), 
-    (0, 4): ('Princess', 'White'), 
-    (0, 5): ('Empress', 'White'), 
-    (1, 1): ('Pawn', 'White'), 
-    (1, 2): ('Pawn', 'White'), 
-    (1, 3): ('Pawn', 'White'), 
-    (1, 4): ('Pawn', 'White'), 
-    (1, 5): ('Pawn', 'White'), 
-    (1, 0): ('Ferz', 'White'), 
-    (1, 6): ('Ferz', 'White')
+# SETUP BOARD
+initialChessBoard = {
+
+    ("d", 6): ('King', 'Black'), 
+    ("c", 6): ('Queen', 'Black'), 
+    ("b", 6): ('Bishop', 'Black'), 
+    ("a", 6): ('Knight', 'Black'), 
+    ("g", 6): ('Rook', 'Black'), 
+    ("e", 6): ('Princess', 'Black'), 
+    ("f", 6): ('Empress', 'Black'), 
+    ("b", 5): ('Pawn', 'Black'), 
+    ("c", 5): ('Pawn', 'Black'), 
+    ("d", 5): ('Pawn', 'Black'), 
+    ("e", 5): ('Pawn', 'Black'), 
+    ("f", 5): ('Pawn', 'Black'), 
+    ("a", 5): ('Ferz', 'Black'), 
+    ("g", 5): ('Ferz', 'Black'), 
+    ("d", 0):('King', 'White'), 
+    ("c", 0): ('Queen', 'White'), 
+    ("b", 0): ('Bishop', 'White'), 
+    ("a", 0): ('Knight', 'White'), 
+    ("g", 0): ('Rook', 'White'), 
+    ("e", 0): ('Princess', 'White'), 
+    ("f", 0): ('Empress', 'White'), 
+    ("b", 1): ('Pawn', 'White'), 
+    ("c", 1): ('Pawn', 'White'), 
+    ("d", 1): ('Pawn', 'White'), 
+    ("e", 1): ('Pawn', 'White'), 
+    ("f", 1): ('Pawn', 'White'), 
+    ("a", 1): ('Ferz', 'White'), 
+    ("g", 1): ('Ferz', 'White')
+}
+
+# KING_SAFETY_STRATEGY (ATTACKING KING ZONE)
+attackWeights = {
+    0:0,
+    1:0,
+    2:50,
+    3:75,
+    4:88,
+    5:94,
+    6:97,
+    7:99,
+    8:110,
+    9:130,
+    10:150,
+    11:200,
+    12:300
+}
+threatValues = {
+    "King": 30,
+    "Queen": 120, # Rook Bishop
+    "Bishop": 40,
+    "Knight": 30,
+    "Rook": 60,
+    "Pawn": 10,
+    "Ferz": 20,
+    "Empress": 100, # Rook Knight
+    "Princess": 80 # Bishop Knight
 }
 
 class Piece:
@@ -293,19 +328,19 @@ class Piece:
         if name == "King":
             self.material_value = 888888
         elif name == "Queen": # Rook Bishop
-            self.material_value = 900
+            self.material_value = 1800
         elif name == "Bishop":
-            self.material_value = 330
+            self.material_value = 400
         elif name == "Knight":
-            self.material_value = 300
+            self.material_value = 400
         elif name == "Rook":
-            self.material_value = 570
+            self.material_value = 600
         elif name == "Empress": # Rook Knight
-            self.material_value = 870
+            self.material_value = 1600
         elif name == "Ferz":
-            self.material_value = 120
+            self.material_value = 300
         elif name == "Princess": # Bishop Knight
-            self.material_value = 630
+            self.material_value = 1200
         else:
             # Pawn
             self.material_value = 100
@@ -328,8 +363,8 @@ class Piece:
     def actual_material_value(self, game_phase):
         valueTable = piecesPositionValueTable[self.get_name()][game_phase]
         pos = self.get_position()
-        if self.tag == "White":
-            valueTable.reverse()
+        if self.tag == "Black":
+            return self.get_material_value() + valueTable[(6-pos[0])][pos[1]]
         return self.get_material_value() + valueTable[pos[0]][pos[1]]
 
     @staticmethod
@@ -401,7 +436,7 @@ class Piece:
                 COVERAGE.add( (new_coordinate[0], East_y) )
                 break
         while South_x < board.get_height(): # Row increasing
-            value = board.get_coordinate_value(new_coordinate[0], East_y) 
+            value = board.get_coordinate_value(South_x, new_coordinate[1]) 
             if value == 0:
                 MOVEMENT.add( ( new_coordinate, (South_x, new_coordinate[1]) ) )
                 COVERAGE.add( (South_x, new_coordinate[1]) )
@@ -416,7 +451,7 @@ class Piece:
                 break
 
         while West_y >= 0: # Col decreasing
-            value = board.get_coordinate_value(new_coordinate[0], East_y) 
+            value = board.get_coordinate_value(new_coordinate[0], West_y) 
             if value == 0:
                 MOVEMENT.add( ( new_coordinate, (new_coordinate[0], West_y) ) )
                 COVERAGE.add( (new_coordinate[0], West_y) )
@@ -457,7 +492,7 @@ class Piece:
                 COVERAGE.add( (NE_x, NE_y) )
                 break
             else:
-                COVERAGE.add( new_coordinate, (NE_x, NE_y) )
+                COVERAGE.add( ( new_coordinate, (NE_x, NE_y) ) )
                 break
         
         while SE_x < board.get_height() and SE_y < board.get_width(): # Row increasing, Col increasing
@@ -656,20 +691,36 @@ class Piece:
         """
         MOVEMENT = set()
         COVERAGE = set()
-        if tag == "White":
-            if board.get_coordinate_value(new_coordinate[0], new_coordinate[1]-1) == 0: # No piece infront of the pawn
-                MOVEMENT.add( (new_coordinate, (new_coordinate[0], new_coordinate[1]-1) ) )
-            for i in range(-1, 2, 2): 
-                if board.get_coordinate_value(new_coordinate[0]+i, new_coordinate[1]-1).get_tag() != tag: # Can capture a piece on either diagonals
-                    MOVEMENT.add( (new_coordinate, (new_coordinate[0]+i, new_coordinate[1]-1) ) )
-                COVERAGE.add( (new_coordinate[0]+i, new_coordinate[1]-1) )
+        if tag == "Black":
+            if new_coordinate[0]-1 < 0: # Reached end of the board, no movement left
+                pass
+            else: 
+                if board.get_coordinate_value(new_coordinate[0]-1, new_coordinate[1]) == 0: # No piece infront of the pawn
+                    MOVEMENT.add( (new_coordinate, (new_coordinate[0]-1, new_coordinate[1]) ) )
+                for i in range(-1, 2, 2): 
+                    if new_coordinate[1]+i < 0 or new_coordinate[1]+i >= board.get_width():
+                        continue
+                    elif board.get_coordinate_value(new_coordinate[0]-1, new_coordinate[1]+i) == 0:
+                        continue
+                    else: 
+                        if board.get_coordinate_value(new_coordinate[0]-1, new_coordinate[1]+i).get_tag() != tag: # Can capture a piece on either diagonals
+                            MOVEMENT.add( (new_coordinate, (new_coordinate[0]-1, new_coordinate[1]+i) ) )
+                    COVERAGE.add( (new_coordinate[0]-i, new_coordinate[1]+i) )
         else:
-            if board.get_coordinate_value(new_coordinate[0], new_coordinate[1]+1) == 0: # No piece infront of the pawn
-                MOVEMENT.add( (new_coordinate, (new_coordinate[0], new_coordinate[1]+1) ) )
-            for i in range(-1, 2, 2): 
-                if board.get_coordinate_value(new_coordinate[0]+i, new_coordinate[1]+1).get_tag() != tag: # Can capture a piece on either diagonals
-                    MOVEMENT.add( (new_coordinate, (new_coordinate[0]+i, new_coordinate[1]+1) ) )
-                COVERAGE.add( (new_coordinate[0]+i, new_coordinate[1]+1) )
+            if new_coordinate[0]+1 >= board.get_height():
+                pass
+            else: 
+                if board.get_coordinate_value(new_coordinate[0]+1, new_coordinate[1]) == 0: # No piece infront of the pawn
+                    MOVEMENT.add( (new_coordinate, (new_coordinate[0]+1, new_coordinate[1]) ) )
+                for i in range(-1, 2, 2): 
+                    if new_coordinate[1]+i <0 or new_coordinate[1]+i >= board.get_width():
+                        continue
+                    elif board.get_coordinate_value(new_coordinate[0]+1, new_coordinate[1]+i) == 0:
+                        continue
+                    else: 
+                        if board.get_coordinate_value(new_coordinate[0]+1, new_coordinate[1]+i).get_tag() != tag: # Can capture a piece on either diagonals
+                            MOVEMENT.add( (new_coordinate, (new_coordinate[0]+1, new_coordinate[1]+i) ) )
+                    COVERAGE.add( (new_coordinate[0]+1, new_coordinate[1]+i) )
 
         return MOVEMENT, COVERAGE
 
@@ -702,36 +753,90 @@ class Piece:
             pass
         return MOVEMENT, COVERAGE
 
+
 #############################################################################
 ######## Board
 #############################################################################
 class Board:
     
-    def __init__(self, pieces):
-        self.grid = [[0]*7]*7 # Creating the grid
-        self.white_pieces = {}
-        self.black_pieces = {}
+    def __init__(self, white_pieces, black_pieces):
+        # Creating the grid
+        self.grid = [ [0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0] ] 
+        self.height = 7
+        self.width = 7
+        self.white_pieces = white_pieces
+        self.black_pieces = black_pieces
 
-        for pos, piece in pieces.items():
-            tag = piece[1]
-            pos = (ord(pos[0])-97, pos[1])
-            if tag == "white":
-                new_piece = Piece(piece[0], pos, "white")
-                self.white_pieces[new_piece] = pos
-                self.grid[pos[0]][pos[1]] = new_piece
-            else:
-                new_piece = Piece(piece[0], pos, "black")
-                self.black_pieces[new_piece] = pos
-                self.grid[pos[0]][pos[1]] = new_piece
+        all_pieces = white_pieces.copy()
+        all_pieces.update(black_pieces)
+        for piece, pos in all_pieces.items():
+            self.grid[pos[0]][pos[1]] = piece
             
     def get_grid(self):
         return self.grid
+
+    def get_height(self):
+        return self.height
+
+    def get_width(self):
+        return self.width
 
     def get_white_pieces(self):
         return self.white_pieces
 
     def get_black_pieces(self):
         return self.black_pieces
+
+    def get_coordinate_value(self, row, col):
+        return self.get_grid()[row][col]
+
+    def apply_action(self, state, movement, player_turn):
+        src, dest = movement
+        new_white_pieces = {}
+        new_black_pieces = {}
+        if player_turn == "White":
+            for white_piece, pos in self.get_white_pieces().items():
+                if src == pos:
+                    pos = dest # Set new position for that chess piece
+                new_white_pieces[white_piece] = pos # Others all constant
+            for black_piece, pos in self.get_black_pieces().items():
+                if dest == pos:
+                    if self.get_coordinate_value(pos[0], pos[1]).get_name() == "King":
+                        state.captured_king("Black")   
+                    continue
+                new_black_pieces[black_piece] = pos
+        else:
+            for black_piece, pos in self.get_black_pieces().items():
+                if src == pos:
+                    pos = dest
+                new_black_pieces[black_piece] = pos
+            for white_piece, pos in self.get_white_pieces().items():
+                if dest == pos:
+                    if self.get_coordinate_value(pos[0], pos[1]).get_name() == "King":
+                        state.captured_king("White")
+                    continue
+                new_white_pieces[white_piece] = pos
+        return Board(new_white_pieces, new_black_pieces)
+
+    #def print_grid(self):
+    #    print("/\t", end = "")
+    #    for k in range(97, 97 + self.get_width()): # Print col index
+    #        print(chr(k) + "\t", end = "")
+    #    print("\n")
+    #    for i in range(self.get_height()):
+    #        print(str(i) + "\t", end = "") # Print row index
+    #        for j in range(self.get_width()):
+    #            if self.get_grid()[i][j] == 0:
+    #                print(str(self.get_grid()[i][j]) + "\t", end = "")
+    #            else:
+    #                print(self.get_grid()[i][j].get_name() + "\t", end = "")
+    #        print("\n")
         
 
 #############################################################################
@@ -740,10 +845,12 @@ class Board:
 class State:
      # Start State Material Value Total Excluding King = 4340
     
-    def __init__(self, board):
+    def __init__(self, board, white_king, black_king):
         self.board = board
-        self.white_coverage = {} # Dict containing Coord: {White Pieces threatening that coordinate}
-        self.black_coverage = {} # Dict containing Coord: {Black Pieces threatening that coordinate}
+        self.white_king = white_king
+        self.black_king = black_king
+        self.white_coverage = {} # Dict containing Coord: {White Pieces threatening that coordinate} # Include Ally Position
+        self.black_coverage = {} # Dict containing Coord: {Black Pieces threatening that coordinate} # Include Ally Position
         self.white_movements = set() # Contain Legal movements (FROM, TO_DEST) that can be made by the white pieces
         self.black_movements = set() # Contain Legal movements (FROM, TO_DEST) that can be made by the black pieces
         self.black_plain_mv = sum([x.get_material_value() for x in self.board.get_black_pieces()]) - 888888 # Exclude King
@@ -751,44 +858,127 @@ class State:
         self.game_phase = ""
 
         for piece, pos in self.board.get_white_pieces().items():
-            self.white_movements, actions = piece.move(self.board, pos)
+            movements, actions = piece.move(self.board, pos)
+            for movement in movements:
+                self.white_movements.add(movement)
             for action in actions:
                 if action not in self.white_coverage.keys():
                     self.white_coverage[action] = set()
                 self.white_coverage[action].add(piece)
 
         for piece, pos in self.board.get_black_pieces().items():
-            self.black_movements, actions = piece.move(self.board, pos)
+            movements, actions = piece.move(self.board, pos)
+            for movement in movements:
+                self.black_movements.add(movement)
             for action in actions:
                 if action not in self.black_coverage.keys():
                     self.black_coverage[action] = set()
                 self.black_coverage[action].add(piece)
 
         pieces_remaining = len(self.board.get_white_pieces()) + len(self.board.get_black_pieces())
-        if pieces_remaining < 10 or self.black_plain_mv < 1300 or self.white_plain_mv < 1300: # Including Kings
-            self.game_phase = "Late"
-        elif pieces_remaining < 22 or self.black_plain_mv < 3800 or self.white_plain_mv < 3800: # Including Kings
+        if pieces_remaining < 10 or self.black_plain_mv < 2200 or self.white_plain_mv < 2200: # Excluding Kings
+            self.game_phase = "End"
+        elif pieces_remaining < 22 or self.black_plain_mv < 5500 or self.white_plain_mv < 5500: # Excluding Kings
             self.game_phase = "Middle"
         else:
             self.game_phase = "Opening"
     
+    def get_board(self):
+        return self.board
+    
+    def get_king(self, tag):
+        if tag == "White":
+            return self.white_king
+        else:
+            return self.black_king
+
+    def get_white_movements(self):
+        return self.white_movements
+
+    def get_black_movements(self):
+        return self.black_movements
+
+    def get_white_coverage(self):
+        return self.white_coverage
+
+    def get_black_coverage(self):
+        return self.black_coverage
+
+    def get_white_plain_mv(self):
+        return self.white_plain_mv
+
+    def get_black_plain_mv(self):
+        return self.black_plain_mv
+
+    def get_game_phase(self):
+        return self.game_phase
+
+    def captured_king(self, tag):
+        if tag == "White":
+            self.white_king = None
+        else:
+            self.black_king = None
+
     def get_total_material_value(self, tag):
         if tag == "White":
-            total_material_value = sum([x.actual_material_value(self.game_phase) for x in self.board.get_white_pieces()])
+            total_material_value = sum([x.actual_material_value(self.get_game_phase()) for x in self.board.get_white_pieces()])
         else:
-            total_material_value = sum([x.actual_material_value(self.game_phase) for x in self.board.get_black_pieces()])
+            total_material_value = sum([x.actual_material_value(self.get_game_phase()) for x in self.board.get_black_pieces()])
         return total_material_value
-            
-#Implement your minimax with alpha-beta pruning algorithm here.
-def ab(gameboard):
-    pass
-    # return start_position, end_position
 
-def max_black():
-    pass
+    # chessprogramming definition
+    # King zone is usually defined as squares to which enemy King can move plus two or three additional squares facing enemy position
+    # Board is small, just stick with one grid movement around King
+    def king_safety_evaluation(self, tag):
 
-def mini_white():
-    pass
+        if tag == "White":
+            king_piece = self.get_king("White")
+            coverage = self.get_black_coverage()
+        else:
+            king_piece = self.get_king("Black")
+            coverage = self.get_white_coverage()
+
+        actionables = set()
+        king_row, king_col = king_piece.get_position()
+        for i in range(-1, 2):
+            for j in range(-1, 2):
+                new_x = king_row + i
+                new_y = king_col + j
+            if new_x < 0 or new_y < 0 or new_x >= self.board.get_height() or new_y >= self.board.get_width(): 
+                continue
+            else: 
+                if self.board.get_coordinate_value(new_x, new_y) != 0:
+                    if self.board.get_coordinate_value(new_x, new_y).get_tag() == king_piece.get_tag():
+                        continue
+                actionables.add((new_x , new_y))
+
+        attackingPieces = set()
+        num_squares_attack = {}
+        for action in actionables:
+            if action not in coverage.keys():
+                continue
+            attackers = coverage[action]
+            for attacker in attackers:
+                if attacker not in num_squares_attack.keys():
+                    num_squares_attack[attacker] = 0
+                num_squares_attack[attacker] += 1
+            attackingPieces = attackingPieces.union(attackers)
+        attackingPiecesCount = len(attackingPieces)
+        valueOfAttacks = 0
+        for piece, n_squares in num_squares_attack.items():
+            valueOfAttacks += (threatValues[piece.get_name()] * n_squares)
+
+        return valueOfAttacks * attackWeights[attackingPiecesCount]/100             
+
+    def evaluate_gamestate(self, tag):
+        if tag == "White":
+            material_diff = self.get_total_material_value(tag) - self.get_total_material_value("Black")
+            threat_value = self.king_safety_evaluation("Black")
+        else:
+            material_diff = self.get_total_material_value(tag) - self.get_total_material_value("White")
+            threat_value = self.king_safety_evaluation("White")
+        return material_diff + threat_value
+
 
 #############################################################################
 ######## Parser function and helper functions
@@ -854,9 +1044,74 @@ def setUpBoard():
 # Return value:
 # move: A tuple containing the starting position of the piece being moved to the new ending position for the piece. x-axis in String format and y-axis in integer format.
 # move example: (('a', 0), ('b', 3))
+            
+#Implement your minimax with alpha-beta pruning algorithm here.
+def minimax(gamestate, depth, player_turn, alpha=-inf, beta=inf):
+    if gamestate.get_king("White") is None:
+        return -888888
+    elif gamestate.get_king("Black") is None:
+        return 888888
+    elif depth == 1:
+        return gamestate.evaluate_gamestate(player_turn)
+    else:
+        if player_turn == "White":
+            next_player_turn = "Black"
+            best_value = -inf
+            for movement in gamestate.get_white_movements():
+                next_gamestate = State(gamestate.get_board().apply_action(gamestate, movement, player_turn), gamestate.get_king("White"), gamestate.get_king("Black"))
+                curr_value = minimax(next_gamestate, depth-1, next_player_turn, alpha, beta)
+                best_value = max(curr_value, best_value)
+                alpha = max(best_value, alpha)
+                if beta <= alpha:
+                    break
+            return best_value
+
+        else:
+            next_player_turn = "White"
+            best_value = inf
+            for movement in gamestate.get_black_movements():
+                next_gamestate = State(gamestate.get_board().apply_action(gamestate, movement, player_turn), gamestate.get_king("White"), gamestate.get_king("Black"))
+                curr_value = minimax(next_gamestate, depth-1, next_player_turn, alpha, beta)
+                best_value = min(best_value, curr_value)
+                beta = min(best_value, beta)
+                if beta <= alpha:
+                    break
+            return best_value
+
+def ab(gamestate):
+    player_turn = "White"
+    depth = 3
+    best_value = -inf
+    alpha = -inf
+    for movement in gamestate.get_white_movements():
+        next_gamestate = State(gamestate.get_board().apply_action(gamestate, movement, player_turn), gamestate.get_king("White"), gamestate.get_king("Black"))
+        curr_value = minimax(next_gamestate, depth-1, "Black", alpha)
+        if curr_value > best_value:
+            best_value = curr_value
+            best_move = movement
+            alpha = best_value
+    movement = ( (chr(best_move[0][1] + 97), best_move[0][0]), (chr(best_move[1][1] + 97), best_move[1][0]) ) 
+    return movement
 
 def studentAgent(gameboard):
+    white_pieces = {}
+    black_pieces = {}
+    white_king = None
+    black_king = None
+    for pos, piece in gameboard.items():
+        tag = piece[1]
+        pos = (pos[1], ord(pos[0])-97)
+        if tag == "White":
+            new_piece = Piece(piece[0], pos, "White")
+            if piece[0] == "King":
+                white_king = new_piece
+            white_pieces[new_piece] = pos
+        else:
+            new_piece = Piece(piece[0], pos, "Black")
+            if piece[0] == "King":
+                black_king = new_piece
+            black_pieces[new_piece] = pos
     # You can code in here but you cannot remove this function, change its parameter or change the return type
-    move = ab(gameboard)
+    move = ab(State(Board(white_pieces, black_pieces), white_king, black_king))
     return move #Format to be returned (('a', 0), ('b', 3))
 

@@ -1,4 +1,4 @@
-rows, cols, grid, enemy_pieces, own_pieces, goals = parse('C:/Users/Allan/Desktop/Notes/Y3S2/CS3243/Project/Project 1/Public Testcases/1.txt')
+rows, cols, grid, enemy_pieces, own_pieces, goals = parse('/Public Testcases/1.txt')
 
 initialized_state = State(rows, cols, grid, enemy_pieces, own_pieces, goals)
 
@@ -19,7 +19,7 @@ for piece in state.get_pieces():
 
 for k, v in state.get_threatened().items():
 	print(f'{k}: {v}\n')
-rows, cols, grid, pieces, k = parse("C:\\Users\\Allan\\Desktop\\Notes\\Y3S2\\CS3243\\Project\\cs3243-chess-assignment\\Code\\Public Testcases\\Local3.txt")
+rows, cols, grid, pieces, k = parse("Code\\Public Testcases\\Local3.txt")
 state = State(rows, cols, grid, pieces, k)
 
 search(rows, cols, grid, pieces, k)
@@ -34,7 +34,7 @@ for coordinates, p in curr_node.get_threatened().items():
         print(f'{coordinates}:{p}')
 
 
-rows, cols, grid, num_pieces = parse("C:\\Users\\Allan\\Desktop\\Notes\\Y3S2\\CS3243\\Project\\cs3243-chess-assignment\\Code\\Public Testcases\\CSP1.txt")
+rows, cols, grid, num_pieces = parse("Code\\Public Testcases\\CSP1.txt")
 result = search(rows, cols, grid, num_pieces)
 state = State(rows, cols, grid, num_pieces)
 for k, v in result.items():
@@ -45,4 +45,27 @@ print(f'coord = {coord}')
 print(f'Before {curr_node.get_available()[each_piece]}')
 print(f'After {curr_node.get_available()[each_piece]}')
 
-os.chdir("C:\\Users\\Allan\\Desktop\\Notes\\Y3S2\\CS3243\\Project\\cs3243-chess-assignment\\Code\\Adverserial Search")
+os.chdir("Code\\Adverserial Search")
+
+studentAgent(gameboard)
+state = State(Board(white_pieces, black_pieces))
+state.king_safety_evaluation("White")
+
+tc6 = {("a", 3): ("Pawn", "White"), ("b", 3):("Pawn", "White"), ("c", 4): ("Pawn", "White"), ("a", 6):("King", "Black"), ("g", 0):("King", "White")}
+tc7 = {('b', 3): ('Rook', 'White'), ('c', 4): ('Rook', 'White'), ('a', 6): ('King', 'Black'), ('g', 0): ('King', 'White')}
+tc8 = {('b', 3): ('Rook', 'Black'), ('c', 4): ('Rook', 'Black'), ('a', 6): ('King', 'White'), ('g', 0): ('King', 'Black')}
+white_pieces = {}
+black_pieces = {}
+for pos, piece in tc7.items():
+        tag = piece[1]
+        pos = (pos[1], ord(pos[0])-97)
+        if tag == "White":
+            new_piece = Piece(piece[0], pos, "White")
+            white_pieces[new_piece] = pos
+        else:
+            new_piece = Piece(piece[0], pos, "Black")
+            black_pieces[new_piece] = pos
+
+state = State(Board(white_pieces, black_pieces))
+state.get_white_movements()
+state.get_black_movements()
