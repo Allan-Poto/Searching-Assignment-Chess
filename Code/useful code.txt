@@ -1,9 +1,31 @@
-rows, cols, grid, enemy_pieces, own_pieces, goals = parse('/Public Testcases/1.txt')
-
+# BFS/DFS/UCS/A*
+rows, cols, grid, enemy_pieces, own_pieces, goals = parse('./Public Testcases/P1/Input/P1_1.txt')
+# Printing Solution
+result = search(rows, cols, grid, enemy_pieces, own_pieces, goals)
 initialized_state = State(rows, cols, grid, enemy_pieces, own_pieces, goals)
+for goal in goals:
+    initialized_state.get_board().set_coordinate(goal[0], goal[1], "(G)")
+initialized_state.get_board().print_grid()
+
+for move in result: # BFS/DFS
+	col = ord(move[1][0])-97
+	row = move[1][1]
+	if initialized_state.get_board().get_coordinate_value(row, col) == "(G)":
+		initialized_state.get_board().set_coordinate(row, col, "X(G)")
+	else:
+		initialized_state.get_board().set_coordinate(row, col, "X")
+
+for move in result[0]: # UCS/ASTAR
+	col = ord(move[1][0])-97
+	row = move[1][1]
+	if initialized_state.get_board().get_coordinate_value(row, col) == "(G)":
+		initialized_state.get_board().set_coordinate(row, col, "X(G)")
+	else:
+		initialized_state.get_board().set_coordinate(row, col, "X")
 
 initialized_state.get_board().print_grid()
 
+# Debugging
 for k, v in initialized_state.get_threatened_squares().items():
 	print(f'{k[0], chr(97 + k[1])}: {[x.get_name() for x in v]}')
 
@@ -12,35 +34,45 @@ for x in initialized_state.get_enemies():
 	for y in x.get_actionables():
 		print(f'{x.get_name()} can move to {y}\n')
 
-result = search(rows, cols, grid, enemy_pieces, own_pieces, goals)
+
+# LOCAL
+rows, cols, grid, pieces, k = parse('C:/Users/Allan/Desktop/Notes/Y3S2/CS3243/Project/cs3243-chess-assignment/Code/Public Testcases/P2/Input/Local1.txt')
+result = search(rows, cols, grid, pieces, k)
+state = State(rows, cols, grid, pieces, k)
+state.get_board().print_grid()
+board = Board(rows, cols, grid)
+result_pos = [(x[1], ord(x[0]) - 97) for x in result.keys()]
+for i in range(rows):
+    for j in range(cols):
+        if (i, j) not in result_pos:
+            board.set_coordinate(i, j, 0)
+board.print_grid()
+
+# Debugging
+print(f'{piece.get_position()}: {piece.get_name()}')
+print(curr_node.get_threatened())
 
 for piece in state.get_pieces():
 	print(f'{piece.get_name()}: {piece.get_actionables()}\n')
-
 for k, v in state.get_threatened().items():
 	print(f'{k}: {v}\n')
-rows, cols, grid, pieces, k = parse("Code\\Public Testcases\\Local3.txt")
-state = State(rows, cols, grid, pieces, k)
-
-search(rows, cols, grid, pieces, k)
-
-print(value)
-print(f'{piece.get_position()}: {piece.get_name()}')
-print(curr_node.get_threatened())
 
 print(curr_node.get_length())
 print(curr_node.get_value())
 for coordinates, p in curr_node.get_threatened().items():
         print(f'{coordinates}:{p}')
 
+# CSP
 
-rows, cols, grid, num_pieces = parse("Code\\Public Testcases\\CSP1.txt")
+rows, cols, grid, num_pieces = parse('Public Testcases/P2/Input/CSP1.txt')
 result = search(rows, cols, grid, num_pieces)
 state = State(rows, cols, grid, num_pieces)
+state.board.print_grid()    
 for k, v in result.items():
 	state.board.update_grid(Piece(v), (k[1], ord(k[0])-97))
 state.board.print_grid()
 
+# DEBUGGING
 print(f'coord = {coord}')
 print(f'Before {curr_node.get_available()[each_piece]}')
 print(f'After {curr_node.get_available()[each_piece]}')

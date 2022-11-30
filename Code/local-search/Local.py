@@ -1,6 +1,3 @@
-# A0201874H
-# Tay Wei Hong Allan
-
 import sys
 import random
 
@@ -42,19 +39,19 @@ class Board:
     
     def set_coordinate(self, row, col, new_value):
         self.grid[row][col] = new_value
-        # print(f'Coordinate ({row}, {col}) is set to {new_value}')
+        #print(f'Coordinate ({row}, {col}) is set to {new_value}')
     
     
-    #def print_grid(self):
-    #    print("/\t", end = "")
-    #    for k in range(97, 97 + self.get_width()): # Print col index
-    #        print(chr(k) + "\t", end = "")
-    #    print("\n")
-    #    for i in range(self.get_height()):
-    #        print(str(i) + "\t", end = "") # Print row index
-    #        for j in range(self.get_width()):
-    #           print(str(self.get_grid()[i][j]) + "\t", end = "")
-    #        print("\n")
+    def print_grid(self):
+        print("/\t", end = "")
+        for k in range(97, 97 + self.get_width()): # Print col index
+            print(chr(k) + "\t", end = "")
+        print("\n")
+        for i in range(self.get_height()):
+            print(str(i) + "\t", end = "") # Print row index
+            for j in range(self.get_width()):
+               print(str(self.get_grid()[i][j]) + "\t", end = "")
+            print("\n")
             
     def update_grid(self, piece, new_coordinate):
         self.set_coordinate(new_coordinate[0], new_coordinate[1], self.piece_dict[piece.get_name()])
@@ -83,16 +80,6 @@ class Piece:
     
     def set_actionables(self, new_actionables):
         self.actionables = new_actionables
- 
-    #@staticmethod    
-    #def check_legality_threatened(board, coordinate, threatened):
-    #    """
-    #    RETURNS TRUE IF MOVEMENT TO THE POSITION IS LEGAL -> NO OBSTACLES, NOT OCCUPIED BY OTHER PIECES, NOT THREATENED
-    #    """
-    #    flag = False
-    #    if board.get_coordinate_value(coordinate[0], coordinate[1]) != -1 and type(board.get_coordinate_value(coordinate[0], coordinate[1])) != str and (coordinate in threatened.keys()) == False:
-    #        flag = True            
-    #    return flag
     
     @staticmethod
     def check_legality(board, coordinate):
@@ -338,7 +325,6 @@ class Piece:
             self.set_actionables(Piece.Empress(board, new_coordinate))
         else:
             pass
-        #print(f'{self.get_name()} is not a valid Chess Piece')
         # Update Current grid 
         # board.update_grid(self, new_coordinate)
         # Update Piece new position 
@@ -487,7 +473,6 @@ def search(rows, cols, grid, pieces, k):
         initialized_state.get_pieces().remove(random_first_piece)
         random_remaining_pieces = initialized_state.get_pieces()
         curr_node = Node(random_remaining_pieces, random_first_value, random_first_threatened)
-        #curr_node = Node(initialized_state.get_pieces(), initialized_state.get_value(), initialized_state.get_threatened())
 
         while (curr_node.get_length() > initialized_state.get_limit()):
             curr_node_move_list = []

@@ -1,6 +1,3 @@
-# A0201874H
-# Tay Wei Hong Allan
-
 import sys
 
 # Helper functions to aid in your implementation. Can edit/remove
@@ -43,16 +40,16 @@ class Board:
         self.grid[row][col] = new_value
         # print(f'Coordinate ({row}, {col}) is set to {new_value}')
         
-    #def print_grid(self):
-    #    print("/\t", end = "")
-    #    for k in range(97, 97 + self.get_width()): # Print col index
-    #        print(chr(k) + "\t", end = "")
-    #    print("\n")
-    #    for i in range(self.get_height()):
-    #        print(str(i) + "\t", end = "") # Print row index
-    #        for j in range(self.get_width()):
-    #           print(str(self.get_grid()[i][j]) + "\t", end = "")
-    #        print("\n")
+    def print_grid(self):
+        print("/\t", end = "")
+        for k in range(97, 97 + self.get_width()): # Print col index
+            print(chr(k) + "\t", end = "")
+        print("\n")
+        for i in range(self.get_height()):
+            print(str(i) + "\t", end = "") # Print row index
+            for j in range(self.get_width()):
+               print(str(self.get_grid()[i][j]) + "\t", end = "")
+            print("\n")
             
     def update_grid(self, piece, new_coordinate):
         self.set_coordinate(new_coordinate[0], new_coordinate[1], self.piece_dict[piece.get_name()])
@@ -81,16 +78,6 @@ class Piece:
     
     def set_actionables(self, new_actionables):
         self.actionables = new_actionables
- 
-    #@staticmethod    
-    #def check_legality_threatened(board, coordinate, threatened):
-    #    """
-    #    RETURNS TRUE IF MOVEMENT TO THE POSITION IS LEGAL -> NO OBSTACLES, NOT OCCUPIED BY OTHER PIECES, NOT THREATENED
-    #    """
-    #    flag = False
-    #    if board.get_coordinate_value(coordinate[0], coordinate[1]) != -1 and type(board.get_coordinate_value(coordinate[0], coordinate[1])) != str and (coordinate in threatened.keys()) == False:
-    #        flag = True            
-    #    return flag
     
     @staticmethod
     def check_legality(board, coordinate):
@@ -336,11 +323,10 @@ class Piece:
             self.set_actionables(Piece.Empress(board, new_coordinate))
         else:
             pass
-        #print(f'{self.get_name()} is not a valid Chess Piece')
         # Update Current grid 
-        # board.update_grid(self, new_coordinate)
+        board.update_grid(self, new_coordinate)
         # Update Piece new position 
-        # self.update_position(new_coordinate)
+        self.update_position(new_coordinate)
 
 #############################################################################
 ######## Node
@@ -409,7 +395,7 @@ class State:
 
     @staticmethod
     def choose_unassigned_pieces(node):
-        mrvh = 1000000 # min remaining value heuristic
+        mrvh = 1000000 # Most restricted variable heuristic
         piece_to_use = []  
         for piece, coords_available in node.get_available().items():
             if len(coords_available) <= mrvh:
@@ -417,7 +403,7 @@ class State:
                     piece_to_use = []
                     mrvh = len(coords_available)
                 piece_to_use += [piece]
-        if len(piece_to_use) > 1: # Degree Tie-Breaking 
+        if len(piece_to_use) > 1: # Degree Tie-Breaking
             if "Queen" in piece_to_use:
                 selection = "Queen"
             elif "Princess" in piece_to_use:
@@ -501,7 +487,7 @@ def backtrack(state, curr_node):
             # Create the new_node after the update
             new_node = Node(unassigned_copy, assigned_copy, available_copy)
             flag = True
-            # Checking if solution still exists
+            # Forward Checking
             for remaining_piece_type in new_node.get_unassigned().keys(): # Unary Consistent
                 if new_node.get_unassigned()[remaining_piece_type] > len(new_node.get_available()[remaining_piece_type]): # Not enuff space to put
                     flag = False
@@ -514,9 +500,9 @@ def backtrack(state, curr_node):
                 if flag == False:
                     break  
             if flag:
-                forward_check = backtrack(state, new_node) # Recurse onwards since solution still exists
-                if forward_check is not None:
-                    return forward_check
+                next_cycle = backtrack(state, new_node) # Recurse onwards since solution still exists
+                if next_cycle is not None:
+                    return next_cycle
 
 def search(rows, cols, grid, num_pieces):
     state = State(rows, cols, grid, num_pieces)

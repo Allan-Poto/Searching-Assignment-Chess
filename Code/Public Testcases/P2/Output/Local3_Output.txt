@@ -1,0 +1,37 @@
+{
+('a', 3): 'Knight', 
+('a', 4): 'Knight', 
+('b', 0): 'King', 
+('b', 3): 'Knight', 
+('b', 4): 'Knight', 
+('e', 0): 'Knight', 
+('e', 1): 'Ferz', 
+('e', 2): 'Princess', 
+('e', 3): 'Knight'
+}
+
+Initial:
+/	a	b	c	d	e	
+
+0	-1	Ki	Kn	Ro	Kn	
+
+1	Ki	-1	Em	Kn	Fe	
+
+2	Bi	Qu	-1	Ki	Pr	
+
+3	Kn	Kn	Bi	-1	Kn	
+
+4	Kn	Kn	Kn	Kn	-1
+
+Solution:
+/	a	b	c	d	e	
+
+0	0	Ki	0	0	Kn	
+
+1	0	0	0	0	Fe	
+
+2	0	0	0	0	Pr	
+
+3	Kn	Kn	0	0	Kn	
+
+4	Kn	Kn	0	0	0

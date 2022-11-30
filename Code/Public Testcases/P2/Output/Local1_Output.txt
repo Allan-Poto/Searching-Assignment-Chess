@@ -1,0 +1,28 @@
+{
+('a', 2): 'Ferz', 
+('b', 0): 'Queen', 
+('c', 3): 'Queen', 
+('d', 1): 'Queen'
+}
+
+Initial:
+/	a	b	c	d	
+
+0	Pr	Qu	Qu	Qu	
+
+1	Qu	Qu	Qu	Qu	
+
+2	Fe	Qu	Qu	Qu	
+
+3	Qu	Em	Qu	Qu
+
+Solution:
+/	a	b	c	d	
+
+0	0	Qu	0	0	
+
+1	0	0	0	Qu	
+
+2	Fe	0	0	0	
+
+3	0	0	Qu	0

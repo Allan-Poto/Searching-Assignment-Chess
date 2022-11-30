@@ -42,16 +42,16 @@ class Board:
         # print(f'Coordinate ({row}, {col}) is set to {new_value}')
     
     
-    #def print_grid(self):
-    #    print("/\t", end = "")
-    #    for k in range(97, 97 + self.get_width()): # Print col index
-    #        print(chr(k) + "\t", end = "")
-    #    print("\n")
-    #    for i in range(self.get_height()):
-    #      print(str(i) + "\t", end = "") # Print row index
-    #       for j in range(self.get_width()):
-    #           print(str(self.get_grid()[i][j]) + "\t", end = "")
-    #       print("\n")
+    def print_grid(self):
+        print("/\t", end = "")
+        for k in range(97, 97 + self.get_width()): # Print col index
+            print(chr(k) + "\t", end = "")
+        print("\n")
+        for i in range(self.get_height()):
+            print(str(i) + "\t", end = "") # Print row index
+            for j in range(self.get_width()):
+               print(str(self.get_grid()[i][j]) + "\t", end = "")
+            print("\n")
             
     def update_grid(self, piece, new_coordinate):
         self.set_coordinate(new_coordinate[0], new_coordinate[1], self.piece_dict[piece.get_name()])
@@ -464,7 +464,6 @@ class State:
         elif curr_piece_name == "Empress":
             actionables = Piece.Empress(self.get_board(), new_coordinate)
         else:
-            # print(f'{self.get_piece_in_play().get_name()} is not a valid Chess Piece')
             pass
         return actionables
         

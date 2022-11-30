@@ -824,19 +824,19 @@ class Board:
                 new_white_pieces[white_piece] = pos
         return Board(new_white_pieces, new_black_pieces)
 
-    #def print_grid(self):
-    #    print("/\t", end = "")
-    #    for k in range(97, 97 + self.get_width()): # Print col index
-    #        print(chr(k) + "\t", end = "")
-    #    print("\n")
-    #    for i in range(self.get_height()):
-    #        print(str(i) + "\t", end = "") # Print row index
-    #        for j in range(self.get_width()):
-    #            if self.get_grid()[i][j] == 0:
-    #                print(str(self.get_grid()[i][j]) + "\t", end = "")
-    #            else:
-    #                print(self.get_grid()[i][j].get_name() + "\t", end = "")
-    #        print("\n")
+    def print_grid(self):
+        print("/\t", end = "")
+        for k in range(97, 97 + self.get_width()): # Print col index
+            print(chr(k) + "\t", end = "")
+        print("\n")
+        for i in range(self.get_height()):
+            print(str(i) + "\t", end = "") # Print row index
+            for j in range(self.get_width()):
+                if self.get_grid()[i][j] == 0:
+                    print(str(self.get_grid()[i][j]) + "\t", end = "")
+                else:
+                    print(self.get_grid()[i][j].get_name() + "\t", end = "")
+            print("\n")
         
 
 #############################################################################
